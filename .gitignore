@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 #output file of a library
-3rdParty\glm\glm\out
+3rdParty/glm/glm/out/
 
 # User-specific files
 *.rsuser
