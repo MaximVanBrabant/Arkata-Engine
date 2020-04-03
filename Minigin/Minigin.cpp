@@ -57,10 +57,10 @@ void dae::Minigin::LoadGame()
 	scene.Add(gameObject);
 
 	//change the content of gameObject to a new pointer that points to a different gameobject with no components yet
-	//gameObject = std::make_shared<GameObject>();
-	//gameObject->AddTextComponent("0",font);
-	//pFrameCounter = gameObject->GetTextComponent();
-	//scene.Add(gameObject);
+	gameObject = std::make_shared<GameObject>();
+	gameObject->AddTextComponent("0",font);
+	pFrameCounter = gameObject->GetTextComponent();
+	scene.Add(gameObject);
 
 	//auto go = std::make_shared<GameObject>();
 	//go->SetTexture("background.jpg");
