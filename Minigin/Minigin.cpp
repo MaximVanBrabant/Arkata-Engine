@@ -46,7 +46,7 @@ void dae::Minigin::LoadGame()
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto gameObject = std::make_shared<GameObject>();
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 	gameObject->AddRenderComponent(std::make_shared<RenderComponent>());
 	gameObject->GetRenderComponent()->AddTexture("background.jpg");
 	int idLogo = gameObject->GetRenderComponent()->AddTexture("logo.png");
@@ -57,10 +57,10 @@ void dae::Minigin::LoadGame()
 	scene.Add(gameObject);
 
 	//change the content of gameObject to a new pointer that points to a different gameobject with no components yet
-	//gameObject = std::make_shared<GameObject>();
-	//gameObject->AddTextComponent("0",font);
-	//pFrameCounter = gameObject->GetTextComponent();
-	//scene.Add(gameObject);
+	gameObject = std::make_shared<GameObject>();
+	gameObject->AddTextComponent("0",font);
+	pFrameCounter = gameObject->GetTextComponent();
+	scene.Add(gameObject);
 
 	//auto go = std::make_shared<GameObject>();
 	//go->SetTexture("background.jpg");
@@ -136,7 +136,7 @@ void dae::Minigin::Run()
 
 			//Uint32 endTime = SDL_GetTicks();
 			//SDL_Delay(lastTime + (Uint32)DESIRED_FRAMERATE - endTime);
-			SDL_Delay(6);
+			//SDL_Delay(6);
 
 		}
 	}

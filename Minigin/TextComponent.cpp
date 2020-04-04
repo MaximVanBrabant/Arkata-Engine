@@ -8,7 +8,7 @@
 #include "Renderer.h"
 
 dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font)
-	:m_Text{text}, m_Font{font}, m_Texture{nullptr}
+	:m_Text{text}, m_Font{font}, m_Texture{nullptr}, m_NeedsUpdate{true}
 {
 }
 
