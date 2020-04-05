@@ -7,15 +7,25 @@ public:
 	FPSComponent() = default;
 	~FPSComponent() = default;
 
-	void StartTime();
+	float GetElapsedTime() const;
+	int GetFPS() const;
+
+	void SetStartTime();
+	void SetLastTime();
+	void UpdateStartTime();
 private:
-	static const int DESIRED_FPS = 60;
-	static const int MS_PER_SECOND = 1000; //how much milliseconds are in one second
-	static const float DESIRED_FRAMERATE;
+	static const Uint32 DESIRED_FPS;
+	static const Uint32 MS_PER_SECOND;
+	static const Uint32 DESIRED_FRAMERATE;
+	static const Uint32 COOLDOWN_TIME;
 	
-	//static Uint32 m_LastTime;
-	//static Uint32 m_CurrentTime;
-	//static int m_AccumulatedTime;
+	static Uint32 m_LastTime;
+	static Uint32 m_StartTime;
+	static Uint32 m_AccumulatedTime;
+	static int m_DelayTime;
+	static int m_FPS;
+
+	static float m_ElapsedSec;
 
 };
 

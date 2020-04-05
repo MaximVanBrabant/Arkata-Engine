@@ -13,8 +13,9 @@ namespace dae
 		void Run();
 	private:
 		static const int DESIRED_FPS = 60;
-		static const int MS_PER_SECOND = 1000; //how much milliseconds are in one second
+		static const int MS_PER_SECOND = 1000;
 		std::shared_ptr<TextComponent> pFrameCounter;
 		SDL_Window* m_Window{};
+
 	};
 }

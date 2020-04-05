@@ -1,8 +1,7 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
-//#include "Renderer.h"
-//#include "RenderComponent.h"
+
 
 using namespace dae;
 
@@ -36,17 +35,17 @@ void dae::GameObject::Render() const
 }
 
 
-Transform dae::GameObject::GetTransformComponent() const
+const Transform& dae::GameObject::GetTransformComponent() const
 {
 	return m_Transform;
 }
 
-std::shared_ptr<RenderComponent> dae::GameObject::GetRenderComponent() const
+const std::shared_ptr<RenderComponent>& dae::GameObject::GetRenderComponent() const
 {
 	return m_pRenderComponent;
 }
 
-std::shared_ptr<TextComponent> dae::GameObject::GetTextComponent() const
+const std::shared_ptr<TextComponent>& dae::GameObject::GetTextComponent() const
 {
 
 	return m_pTextComponent;
@@ -57,7 +56,7 @@ void dae::GameObject::AddTextComponent(const std::string& text, const std::share
 	m_pTextComponent = std::make_shared<TextComponent>(text, font);
 }
 
-void dae::GameObject::AddTextComponent(std::shared_ptr<TextComponent> pTextComponent)
+void dae::GameObject::AddTextComponent(const std::shared_ptr<TextComponent>& pTextComponent)
 {
 	if (m_pTextComponent == nullptr)
 	{
@@ -69,7 +68,7 @@ void dae::GameObject::AddTextComponent(std::shared_ptr<TextComponent> pTextCompo
 	}
 }
 
-void dae::GameObject::AddRenderComponent(std::shared_ptr<RenderComponent> pRenderComponent)
+void dae::GameObject::AddRenderComponent(const std::shared_ptr<RenderComponent>& pRenderComponent)
 {
 	m_pRenderComponent = pRenderComponent;
 }

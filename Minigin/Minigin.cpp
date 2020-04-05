@@ -99,11 +99,14 @@ void dae::Minigin::Run()
 
 	LoadGame();
 
-	const float DESIRED_FRAMERATE = MS_PER_SECOND / DESIRED_FPS;
-	//set current time
-	auto lastTime = SDL_GetTicks();
-	auto accumulatedTime = 0;
+	const Uint32 DESIRED_FRAMERATE{ MS_PER_SECOND / DESIRED_FPS };
 
+	//set current time
+	Uint32 lastTime = SDL_GetTicks();
+	//dont constantly update the framecounter
+	const Uint32 cooldownTime{ MS_PER_SECOND / 4 };
+	Uint32 accumulatedTime{};
+	Uint32 fps{};
 	{
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
@@ -112,13 +115,12 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
-			auto currentTime = SDL_GetTicks();
+			//start gameLoop
+			Uint32 startTime = SDL_GetTicks();
+			Uint32 elapsedTime = startTime - lastTime;
 
-			auto elapsedTime = currentTime - lastTime;
-
-			if (accumulatedTime > MS_PER_SECOND/4)
+			if (accumulatedTime > cooldownTime)
 			{
-				int fps{};
 				if (elapsedTime != 0)
 					fps = MS_PER_SECOND / elapsedTime;
 				pFrameCounter->SetText(std::to_string(fps));
@@ -130,13 +132,17 @@ void dae::Minigin::Run()
 			sceneManager.Update(float(elapsedTime));
 			renderer.Render();
 			
-			lastTime = currentTime;
+			//end gameLoop
+			lastTime = startTime;
 			accumulatedTime += elapsedTime;
 
 
-			//Uint32 endTime = SDL_GetTicks();
-			//SDL_Delay(lastTime + (Uint32)DESIRED_FRAMERATE - endTime);
-			//SDL_Delay(6);
+			Uint32 endTime = SDL_GetTicks();
+			//using int here so it doesn't implicitly convert it to an unsigned int / this value can be negative if your computer runs slow
+			int delayTime = lastTime + DESIRED_FRAMERATE - endTime;
+
+			if (delayTime > 0)
+				SDL_Delay(delayTime);
 
 		}
 	}
