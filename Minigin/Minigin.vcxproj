@@ -212,14 +212,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\Minigin.h" />
     <ClInclude Include="Src\MiniginPCH.h" />
     <ClInclude Include="Src\RenderComponent.h" />
-    <ClInclude Include="Src\SceneObject.h" />
     <ClInclude Include="Src\Renderer.h" />
     <ClInclude Include="Src\ResourceManager.h" />
     <ClInclude Include="Src\Scene.h" />
     <ClInclude Include="Src\SceneManager.h" />
     <ClInclude Include="Src\Singleton.h" />
     <ClInclude Include="Src\TextComponent.h" />
-    <ClInclude Include="Src\TextObject.h" />
     <ClInclude Include="Src\Texture2D.h" />
     <ClInclude Include="Src\Transform.h" />
   </ItemGroup>
@@ -242,7 +240,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Src\Scene.cpp" />
     <ClCompile Include="Src\SceneManager.cpp" />
     <ClCompile Include="Src\TextComponent.cpp" />
-    <ClCompile Include="Src\TextObject.cpp" />
     <ClCompile Include="Src\Texture2D.cpp" />
     <ClCompile Include="Src\Transform.cpp" />
   </ItemGroup>
