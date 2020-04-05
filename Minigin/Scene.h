@@ -19,6 +19,8 @@ namespace dae
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
+		int GetId() const;
+
 	private: 
 		explicit Scene(const std::string& name);
 
@@ -26,6 +28,7 @@ namespace dae
 		std::vector < std::shared_ptr<GameObject>> m_Objects{};
 
 		static unsigned int m_IdCounter; 
+		unsigned int m_Id;
 	};
 
 }

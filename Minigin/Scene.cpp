@@ -6,7 +6,13 @@ using namespace dae;
 
 unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_Name(name) {}
+int dae::Scene::GetId() const
+{
+	return m_Id;
+}
+
+//first scene has index 0
+Scene::Scene(const std::string& name) : m_Name(name), m_Id{ m_IdCounter } { ++m_IdCounter; }
 
 Scene::~Scene() = default;
 

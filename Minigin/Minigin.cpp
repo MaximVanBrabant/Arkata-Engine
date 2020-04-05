@@ -61,25 +61,6 @@ void dae::Minigin::LoadGame()
 	gameObject->AddTextComponent("0",font);
 	pFrameCounter = gameObject->GetTextComponent();
 	scene.Add(gameObject);
-
-	//auto go = std::make_shared<GameObject>();
-	//go->SetTexture("background.jpg");
-	//scene.Add(go);
-
-	//go = std::make_shared<GameObject>();
-	//go->SetTexture("logo.png");
-	//go->SetPosition(216, 180);
-	//scene.Add(go);
-
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	//auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	//to->SetPosition(80, 20);
-	//scene.Add(to);
-
-	//pFrameCounter = std::make_shared<TextObject>("0", font);
-	//pFrameCounter->SetPosition(0, 0);
-	//scene.Add(pFrameCounter);
-
 }
 
 void dae::Minigin::Cleanup()
