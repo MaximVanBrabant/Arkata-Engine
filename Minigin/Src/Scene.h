@@ -25,10 +25,11 @@ namespace dae
 		explicit Scene(const std::string& name);
 
 		std::string m_Name;
+		unsigned int m_Id;
 		std::vector < std::shared_ptr<GameObject>> m_Objects{};
 
+		//static
 		static unsigned int m_IdCounter; 
-		unsigned int m_Id;
 	};
 
 }

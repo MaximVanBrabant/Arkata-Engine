@@ -1,74 +1,53 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
+#include "Component.h"
 #include "ResourceManager.h"
 
 
-using namespace dae;
 
-GameObject::GameObject()
-	:m_Transform{}, m_pRenderComponent{ nullptr }, m_pTextComponent{nullptr}
+dae::GameObject::GameObject()
+	:m_IsActive{true}, m_Name{}, m_pComponents{}
 {
-
 }
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::GameObject(const std::string& name)
+	:m_Name{name}, m_IsActive{true}, m_pComponents{}
+{
+}
+
+dae::GameObject::GameObject(const GameObject & other)
+{
+	m_IsActive = other.m_IsActive;
+	m_Name = other.m_Name;
+	m_pComponents = other.m_pComponents;
+}
 
 void dae::GameObject::Update(float deltaTime)
 {
-	UNREFERENCED_PARAMETER(deltaTime);
-	if (m_pTextComponent)
+	for (std::shared_ptr<Component> component : m_pComponents)
 	{
-		m_pTextComponent->Update(deltaTime);
+		component->Update(deltaTime);
 	}
 }
 
 void dae::GameObject::Render() const
 {
-	if (m_pRenderComponent)
+	for (std::shared_ptr<Component> component : m_pComponents)
 	{
-		m_pRenderComponent->Render(m_Transform);
-	}
-	if (m_pTextComponent)
-	{
-		m_pTextComponent->Render();
+		component->Render();
 	}
 }
 
-
-const Transform& dae::GameObject::GetTransformComponent() const
+void dae::GameObject::Destroy()
 {
-	return m_Transform;
+	//destroy it at the end of the game loop
+	m_IsActive = false;
 }
 
-const std::shared_ptr<RenderComponent>& dae::GameObject::GetRenderComponent() const
-{
-	return m_pRenderComponent;
-}
-
-const std::shared_ptr<TextComponent>& dae::GameObject::GetTextComponent() const
-{
-
-	return m_pTextComponent;
-}
-
-void dae::GameObject::AddTextComponent(const std::string& text, const std::shared_ptr<Font>& font)
-{
-	m_pTextComponent = std::make_shared<TextComponent>(text, font);
-}
-
-void dae::GameObject::AddTextComponent(const std::shared_ptr<TextComponent>& pTextComponent)
-{
-	if (m_pTextComponent == nullptr)
-	{
-		m_pTextComponent = pTextComponent;
-	}
-	else
-	{
-		std::cerr << "gameObject already has a textComponent\n";
-	}
-}
-
-void dae::GameObject::AddRenderComponent(const std::shared_ptr<RenderComponent>& pRenderComponent)
-{
-	m_pRenderComponent = pRenderComponent;
-}
+//const Transform& dae::GameObject::GetTransform() const
+//{
+//	for (Component* p : m_pComponents)
+//	{
+//		
+//	}
+//}

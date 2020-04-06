@@ -7,16 +7,20 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
-#include "RenderComponent.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include <algorithm>
+#include "Game.h"
 
 using namespace std;
 using namespace std::chrono;
 
 void dae::Minigin::Initialize()
 {
+	//zeroInitiliaze
+	m_TicksPrevFrame = 0;
+	m_DeltaTime = 0.0f;
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
@@ -44,23 +48,25 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() 
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
-	gameObject->AddRenderComponent(std::make_shared<RenderComponent>());
-	gameObject->GetRenderComponent()->AddTexture("background.jpg");
-	int idLogo = gameObject->GetRenderComponent()->AddTexture("logo.png");
-	gameObject->GetRenderComponent()->SetPositionTexture(idLogo, 216, 180, 0);
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	gameObject->AddTextComponent("Programming 4 Assignment", font);
-	gameObject->GetTextComponent()->SetPosition(80, 20);
-	scene.Add(gameObject);
+	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
+	////gameObject->AddRenderComponent(std::make_shared<RenderComponent>());
+	////gameObject->GetRenderComponent()->AddTexture("background.jpg");
+	////int idLogo = gameObject->GetRenderComponent()->AddTexture("logo.png");
+	////gameObject->GetRenderComponent()->SetPositionTexture(idLogo, 216, 180, 0);
+	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	////gameObject->AddTextComponent("Programming 4 Assignment", font);
+	////gameObject->GetTextComponent()->SetPosition(80, 20);
+	////scene.Add(gameObject);
 
-	//change the content of gameObject to a new pointer that points to a different gameobject with no components yet
-	gameObject = std::make_shared<GameObject>();
-	gameObject->AddTextComponent("0",font);
-	pFrameCounter = gameObject->GetTextComponent();
-	scene.Add(gameObject);
+	////change the content of gameObject to a new pointer that points to a different gameobject with no components yet
+	//gameObject = std::make_shared<GameObject>();
+	//gameObject->AddTextComponent("0",font);
+	//pFrameCounter = gameObject->GetTextComponent();
+	//scene.Add(gameObject);
+
+	Game game{};
 }
 
 void dae::Minigin::Cleanup()
@@ -76,18 +82,16 @@ void dae::Minigin::Run()
 	Initialize();
 
 	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
+	ResourceManager::GetInstance().Init("./Data/");
 
 	LoadGame();
 
-	const Uint32 DESIRED_FRAMERATE{ MS_PER_SECOND / DESIRED_FPS };
+	const Uint32 DESIRED_FRAMETIME{ MS_PER_SECOND / DESIRED_FPS };
 
-	//set current time
-	Uint32 lastTime = SDL_GetTicks();
 	//dont constantly update the framecounter
-	const Uint32 cooldownTime{ MS_PER_SECOND / 4 };
-	Uint32 accumulatedTime{};
-	Uint32 fps{};
+	//const float cooldownTime{ 0.25f };
+	//float accumulatedTime{};
+	//Uint32 fps{};
 	{
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
@@ -96,34 +100,36 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
-			//start gameLoop
-			Uint32 startTime = SDL_GetTicks();
-			Uint32 elapsedTime = startTime - lastTime;
-
-			if (accumulatedTime > cooldownTime)
-			{
-				if (elapsedTime != 0)
-					fps = MS_PER_SECOND / elapsedTime;
-				pFrameCounter->SetText(std::to_string(fps));
-				accumulatedTime = 0;
-			}
-
-			doContinue = input.ProcessInput();
-
-			sceneManager.Update(float(elapsedTime));
-			renderer.Render();
-			
-			//end gameLoop
-			lastTime = startTime;
-			accumulatedTime += elapsedTime;
-
-
-			Uint32 endTime = SDL_GetTicks();
-			//using int here so it doesn't implicitly convert it to an unsigned int / this value can be negative if your computer runs slow
-			int delayTime = lastTime + DESIRED_FRAMERATE - endTime;
+			int delayTime = DESIRED_FRAMETIME - (SDL_GetTicks() - m_TicksPrevFrame);
 
 			if (delayTime > 0)
 				SDL_Delay(delayTime);
+			
+			//start gameLoop
+			m_DeltaTime = (SDL_GetTicks() - m_TicksPrevFrame) / float(MS_PER_SECOND);
+			m_TicksPrevFrame = SDL_GetTicks();
+
+			//clamp
+			m_DeltaTime = (m_DeltaTime > 0.05f) ? 0.05f : m_DeltaTime;
+
+			//if (accumulatedTime > cooldownTime)
+			//{
+			//	if (m_DeltaTime != 0)
+			//		fps = Uint32(1 / m_DeltaTime);
+			//	pFrameCounter->SetText(std::to_string(fps));
+			//	accumulatedTime = 0;
+			//}
+
+			doContinue = input.ProcessInput();
+
+			sceneManager.Update(m_DeltaTime);
+			renderer.Render();
+			
+			//accumulatedTime += m_DeltaTime;
+
+
+			//using int here so it doesn't implicitly convert it to an unsigned int / this value can be negative if your computer runs slow
+
 
 		}
 	}

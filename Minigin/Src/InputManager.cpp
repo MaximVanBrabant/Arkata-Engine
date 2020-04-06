@@ -5,19 +5,22 @@
 
 bool dae::InputManager::ProcessInput()
 {
+	//controller
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	XInputGetState(0, &m_CurrentState);
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+		switch (e.type)
+		{
+		case SDL_QUIT:
 			return false;
-		}
-		if (e.type == SDL_KEYDOWN) {
-			
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
+			break;
+		case SDL_KEYDOWN:
+			std::cout << "key has been pressed " << std::endl;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			break;
 		}
 	}
 

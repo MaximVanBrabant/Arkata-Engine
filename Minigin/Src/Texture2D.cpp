@@ -5,7 +5,6 @@
 dae::Texture2D::~Texture2D()
 {
 	SDL_DestroyTexture(m_Texture);
-	delete m_Transform;
 }
 
 SDL_Texture* dae::Texture2D::GetSDLTexture() const
@@ -14,7 +13,6 @@ SDL_Texture* dae::Texture2D::GetSDLTexture() const
 }
 
 dae::Texture2D::Texture2D(SDL_Texture* texture)
-	:m_Transform{ new Transform{} }
 {
 	m_Texture = texture;
 }

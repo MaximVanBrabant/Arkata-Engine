@@ -17,10 +17,7 @@ namespace dae
 		Texture2D(Texture2D &&) = delete;
 		Texture2D & operator= (const Texture2D &) = delete;
 		Texture2D & operator= (const Texture2D &&) = delete;
-
-		Transform* GetTranform() const { return m_Transform; }
 	private:
 		SDL_Texture* m_Texture;
-		Transform* m_Transform;
 	};
 }

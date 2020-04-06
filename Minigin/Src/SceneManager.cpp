@@ -4,12 +4,14 @@
 
 void dae::SceneManager::Update(float deltaTime)
 {
-	m_Scenes[m_ActiveSceneId]->Update(deltaTime);
+	if (m_Scenes.size() != 0)
+		m_Scenes[m_ActiveSceneId]->Update(deltaTime);
 }
 
 void dae::SceneManager::Render()
 {
-	m_Scenes[m_ActiveSceneId]->Render();
+	if(m_Scenes.size() != 0)
+		m_Scenes[m_ActiveSceneId]->Render();
 }
 
 void dae::SceneManager::SetActiveScene(int id)

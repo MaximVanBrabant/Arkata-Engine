@@ -48,9 +48,6 @@
     <ClInclude Include="Src\MiniginPCH.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\RenderComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,6 +78,12 @@
     <ClInclude Include="Src\Singleton.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Src\SpriteComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Component.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\FPSComponent.cpp">
@@ -94,9 +97,6 @@
     </ClCompile>
     <ClCompile Include="Src\MiniginPCH.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\RenderComponent.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Src\Scene.cpp">
       <Filter>Source Files</Filter>
@@ -124,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="Src\ResourceManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SpriteComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

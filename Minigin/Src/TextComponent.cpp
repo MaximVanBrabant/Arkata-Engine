@@ -38,8 +38,8 @@ void dae::TextComponent::Render() const
 {
 	if (m_Texture != nullptr)
 	{
-		const auto pos = m_Transform.GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+		//const auto pos = m_Transform.GetPosition();
+		//Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}
 }
 
@@ -51,5 +51,7 @@ void dae::TextComponent::SetText(const std::string& text)
 
 void dae::TextComponent::SetPosition(const float x, const float y)
 {
-	m_Transform.SetPosition(x, y, 0.0f);
+	UNREFERENCED_PARAMETER(x);
+	UNREFERENCED_PARAMETER(y);
+	//m_Transform.SetPosition(x, y, 0.0f);
 }
