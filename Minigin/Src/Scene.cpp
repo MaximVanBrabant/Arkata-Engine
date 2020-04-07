@@ -23,7 +23,7 @@ void Scene::Add(const std::shared_ptr<GameObject>& object)
 
 void Scene::Update(float deltaTime)
 {
-	for(auto& object : m_Objects)
+	for(const auto& object : m_Objects)
 	{
 		object->Update(deltaTime);
 	}

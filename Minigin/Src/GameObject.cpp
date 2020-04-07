@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "ResourceManager.h"
+#include "SpriteComponent.h"
+#include "Transform.h"
 
 
 
@@ -22,9 +24,39 @@ dae::GameObject::GameObject(const GameObject & other)
 	m_pComponents = other.m_pComponents;
 }
 
+void dae::GameObject::ListComponents() const
+{
+	std::cout << "gameObject " << m_Name << " has these components attached to it: \n";
+	for (std::shared_ptr<Component> pComponent : m_pComponents)
+	{
+		const char* type = typeid(*pComponent).name();
+		if (type == typeid(Transform).name())
+		{
+			std::cout << "transform component " << std::endl;
+		}
+		else if (type == typeid(SpriteComponent).name())
+		{
+			std::cout << "sprite component " << std::endl;
+		}
+	}
+}
+
+const std::shared_ptr<dae::Component>& dae::GameObject::GetTransform() const
+{
+	for (const std::shared_ptr<dae::Component>& component : m_pComponents)
+	{
+		auto type = typeid(*component).name();
+		if (type == typeid(Transform).name())
+		{
+			return component;
+		}
+	}
+	throw std::exception("No transform component found on this gameObject");
+}
+
 void dae::GameObject::Update(float deltaTime)
 {
-	for (std::shared_ptr<Component> component : m_pComponents)
+	for (const std::shared_ptr<Component>& component : m_pComponents)
 	{
 		component->Update(deltaTime);
 	}
@@ -32,7 +64,7 @@ void dae::GameObject::Update(float deltaTime)
 
 void dae::GameObject::Render() const
 {
-	for (std::shared_ptr<Component> component : m_pComponents)
+	for (const std::shared_ptr<Component>& component : m_pComponents)
 	{
 		component->Render();
 	}

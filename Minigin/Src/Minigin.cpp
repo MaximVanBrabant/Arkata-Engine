@@ -67,6 +67,7 @@ void dae::Minigin::LoadGame()
 	//scene.Add(gameObject);
 
 	Game game{};
+
 }
 
 void dae::Minigin::Cleanup()

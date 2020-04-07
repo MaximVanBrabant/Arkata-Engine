@@ -6,12 +6,19 @@
 
 using namespace dae;
 
+void dae::SpriteComponent::Initialize()
+{
+	std::shared_ptr<Component> transform = GetGameObject()->GetTransform();
+	m_pTransform = dynamic_cast<Transform*>(transform.get());
+}
+
 void SpriteComponent::Render() const
 {
 	for (std::shared_ptr<Texture2D> x : m_pTextures)
 	{
-		//const auto pos = transform.GetPosition() + x->GetTranform()->GetPosition();
-		//Renderer::GetInstance().RenderTexture(*x, pos.x, pos.y);
+		const auto pos = m_pTransform->GetPosition();
+		Renderer::GetInstance().RenderTexture(*x, pos.x, pos.y);
+
 	}
 }
 

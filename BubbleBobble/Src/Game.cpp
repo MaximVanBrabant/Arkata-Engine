@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
+#include "SpriteComponent.h"
 
 using namespace dae;
 
@@ -18,10 +19,10 @@ void Game::InitializeLevel01()
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
-	gameObject->AddComponent<Transform>(0,0,20,20,50,50,1);
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("hello");
+	auto& transformComponent = gameObject->AddComponent<Transform>(0,0,20,20,50,50,1);
 	scene.Add(gameObject);
-
+	std::cout << "name of the gameObject: " << transformComponent.GetGameObject()->GetName() << std::endl;
 
 
 	//gameObject->AddRenderComponent(std::make_shared<RenderComponent>());
@@ -42,12 +43,33 @@ void Game::InitializeLevel01()
 
 void Game::InitializeLevel02()
 {
-	//auto& scene = SceneManager::GetInstance().CreateScene("Demo00");
+	auto& scene = SceneManager::GetInstance().CreateScene("Demo00");
 
-	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
-	//scene.Add(gameObject);
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Projectile00");
+	gameObject->AddComponent<Transform>(30, 20, 50, 80, 20, 100, 1);
+	//sprite
+	auto& spriteComponent = gameObject->AddComponent<SpriteComponent>();
+	spriteComponent.AddTexture("./RESIZE/apple.png");
+	scene.Add(gameObject);
+	gameObject->ListComponents();
 
-	//SceneManager::GetInstance().SetActiveScene(scene.GetId());
+
+	gameObject = std::make_shared<GameObject>("Projectile01");
+	gameObject->AddComponent<Transform>(500, 500, -50, -80, 200, 100, 1);
+	scene.Add(gameObject);
+	gameObject->ListComponents();
+
+	gameObject = std::make_shared<GameObject>("Projectile02");
+	gameObject->AddComponent<Transform>(0, 500, 50, -80, 25, 90, 1);
+	scene.Add(gameObject);
+	gameObject->ListComponents();
+
+	gameObject = std::make_shared<GameObject>("Projectile03");
+	gameObject->AddComponent<Transform>(500, 0, -100, 100, 50, 50, 1);
+	scene.Add(gameObject);
+	gameObject->ListComponents();
+
+	SceneManager::GetInstance().SetActiveScene(scene.GetId());
 }
 
 void Game::InitializeLevel03()

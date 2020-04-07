@@ -1,19 +1,16 @@
 #pragma once
 #include "Transform.h"
 
-class Component;
 
 namespace dae
 {
+	class Component;
 	class GameObject final
 	{
 	public:
 		void Update(float deltaTime);
 		void Render() const;
 		void Destroy();
-
-		//Transform
-		//const Transform& GetTransform() const;
 
 		GameObject();
 		GameObject(const std::string& name);
@@ -27,6 +24,7 @@ namespace dae
 
 		const std::string& GetName() const { return m_Name; }
 		bool IsActive() const { return m_IsActive; }
+		//Transform& GetTransform() const;
 
 		template<typename T, typename... TArgs>
 		T& AddComponent(TArgs&&... args)
@@ -36,8 +34,10 @@ namespace dae
 			m_pComponents.push_back(newComponent);
 			newComponent->Initialize();
 			return *newComponent;
-
 		}
+
+		void ListComponents() const;
+		const std::shared_ptr<Component>& GetTransform() const;
 
 	private:
 		bool m_IsActive;
