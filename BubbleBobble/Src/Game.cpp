@@ -22,7 +22,7 @@ void Game::InitializeLevel01()
 	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("hello");
 	auto& transformComponent = gameObject->AddComponent<Transform>(0,0,20,20,50,50,1);
 	scene.Add(gameObject);
-	std::cout << "name of the gameObject: " << transformComponent.GetGameObject()->GetName() << std::endl;
+	std::cout << "name of the gameObject: " << transformComponent.m_Owner->GetName() << std::endl;
 
 
 	//gameObject->AddRenderComponent(std::make_shared<RenderComponent>());
@@ -52,6 +52,7 @@ void Game::InitializeLevel02()
 	spriteComponent.AddTexture("./RESIZE/apple.png");
 	scene.Add(gameObject);
 	gameObject->ListComponents();
+
 
 
 	gameObject = std::make_shared<GameObject>("Projectile01");

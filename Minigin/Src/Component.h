@@ -1,8 +1,9 @@
 #pragma once
 #include "GameObject.h"
+#include <memory>
 namespace dae
 {
-	class GameObject;
+	//class GameObject;
 	class Component
 	{
 	public:
@@ -10,10 +11,11 @@ namespace dae
 		virtual void Initialize() {}
 		virtual void Update(float deltaTime) { UNREFERENCED_PARAMETER(deltaTime); }
 		virtual void Render() const {}
-		const std::shared_ptr<GameObject>& GetGameObject() const { return m_Owner; }
-		void SetGameObject(const GameObject& gameObject) { m_Owner = std::move(std::make_shared<GameObject>(gameObject)); }
+		//const GameObject& GetGameObject() const { return m_Owner }
+		//void SetGameObject(std::shared_ptr<GameObject> gameObject ) { m_Owner = gameObject; }
+		GameObject* m_Owner;
+		//GameObject m_Owner;
 	private:
-		std::shared_ptr<GameObject> m_Owner;
 	};
 }
 

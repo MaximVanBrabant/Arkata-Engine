@@ -17,12 +17,30 @@ dae::GameObject::GameObject(const std::string& name)
 {
 }
 
+dae::GameObject::~GameObject()
+{
+	m_ComponentTypeMap.clear();
+	m_pComponents.clear();
+}
+
 dae::GameObject::GameObject(const GameObject & other)
 {
 	m_IsActive = other.m_IsActive;
 	m_Name = other.m_Name;
 	m_pComponents = other.m_pComponents;
+	m_ComponentTypeMap = other.m_ComponentTypeMap;
 }
+
+dae::GameObject& dae::GameObject::operator=(const GameObject& other)
+{
+	m_IsActive = other.m_IsActive;
+	m_Name = other.m_Name;
+	m_pComponents = other.m_pComponents;
+	m_ComponentTypeMap = other.m_ComponentTypeMap;
+	return *this;
+}
+
+
 
 void dae::GameObject::ListComponents() const
 {
@@ -41,18 +59,10 @@ void dae::GameObject::ListComponents() const
 	}
 }
 
-const std::shared_ptr<dae::Component>& dae::GameObject::GetTransform() const
-{
-	for (const std::shared_ptr<dae::Component>& component : m_pComponents)
-	{
-		auto type = typeid(*component).name();
-		if (type == typeid(Transform).name())
-		{
-			return component;
-		}
-	}
-	throw std::exception("No transform component found on this gameObject");
-}
+//const std::shared_ptr<dae::Component>& dae::GameObject::GetTransform() const
+//{
+//	return GetComponent<Transform>();
+//}
 
 void dae::GameObject::Update(float deltaTime)
 {

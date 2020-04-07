@@ -8,8 +8,7 @@ using namespace dae;
 
 void dae::SpriteComponent::Initialize()
 {
-	std::shared_ptr<Component> transform = GetGameObject()->GetTransform();
-	m_pTransform = dynamic_cast<Transform*>(transform.get());
+	m_pTransform = m_Owner->GetComponent<Transform>();
 }
 
 void SpriteComponent::Render() const
