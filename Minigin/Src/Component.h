@@ -13,7 +13,7 @@ namespace dae
 		virtual void Render() const {}
 		//const GameObject& GetGameObject() const { return m_Owner }
 		//void SetGameObject(std::shared_ptr<GameObject> gameObject ) { m_Owner = gameObject; }
-		GameObject* m_Owner;
+		GameObject* m_Owner = nullptr;
 		//GameObject m_Owner;
 	private:
 	};

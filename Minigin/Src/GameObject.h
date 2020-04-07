@@ -19,10 +19,10 @@ namespace dae
 		GameObject(const std::string& name);
 		virtual ~GameObject();
 
-		//this gets executed when i cal SetGameObject on component
-		GameObject(const GameObject& other);
+		//need to use raw pointers sometimes to make sure i dont make any copies of the gameObject (see documentation)
+		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
-		GameObject& operator=(const GameObject& other);
+		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 		const std::string& GetName() const { return m_Name; }
@@ -44,6 +44,19 @@ namespace dae
 		T* GetComponent()
 		{
 			return dynamic_cast<T*>(m_ComponentTypeMap[&typeid(T)].get());
+		}
+
+		template<typename T>
+		bool HasComponent() const
+		{
+			for (auto& pair : m_ComponentTypeMap)
+			{
+				if (typeid(T).name() == pair.first->name())
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 

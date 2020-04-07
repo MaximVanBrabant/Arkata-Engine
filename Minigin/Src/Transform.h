@@ -13,6 +13,9 @@ namespace dae
 	public:
 		Transform(int posX, int posY, int velX, int velY, int w, int h, int s);
 		const glm::vec2& GetPosition() const { return m_Position; }
+		int GetWidth() const { return m_Width; }
+		int GetHeight() const { return m_Height; }
+		int GetScale() const { return m_Scale; }
 		void SetPosition(float x, float y);
 
 		void Initialize() override;

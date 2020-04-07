@@ -23,46 +23,13 @@ dae::GameObject::~GameObject()
 	m_pComponents.clear();
 }
 
-dae::GameObject::GameObject(const GameObject & other)
-{
-	m_IsActive = other.m_IsActive;
-	m_Name = other.m_Name;
-	m_pComponents = other.m_pComponents;
-	m_ComponentTypeMap = other.m_ComponentTypeMap;
-}
-
-dae::GameObject& dae::GameObject::operator=(const GameObject& other)
-{
-	m_IsActive = other.m_IsActive;
-	m_Name = other.m_Name;
-	m_pComponents = other.m_pComponents;
-	m_ComponentTypeMap = other.m_ComponentTypeMap;
-	return *this;
-}
-
-
-
 void dae::GameObject::ListComponents() const
 {
-	std::cout << "gameObject " << m_Name << " has these components attached to it: \n";
-	for (std::shared_ptr<Component> pComponent : m_pComponents)
+	for (auto& pair : m_ComponentTypeMap)
 	{
-		const char* type = typeid(*pComponent).name();
-		if (type == typeid(Transform).name())
-		{
-			std::cout << "transform component " << std::endl;
-		}
-		else if (type == typeid(SpriteComponent).name())
-		{
-			std::cout << "sprite component " << std::endl;
-		}
+		std::cout << pair.first->name() << std::endl;
 	}
 }
-
-//const std::shared_ptr<dae::Component>& dae::GameObject::GetTransform() const
-//{
-//	return GetComponent<Transform>();
-//}
 
 void dae::GameObject::Update(float deltaTime)
 {
@@ -85,11 +52,3 @@ void dae::GameObject::Destroy()
 	//destroy it at the end of the game loop
 	m_IsActive = false;
 }
-
-//const Transform& dae::GameObject::GetTransform() const
-//{
-//	for (Component* p : m_pComponents)
-//	{
-//		
-//	}
-//}

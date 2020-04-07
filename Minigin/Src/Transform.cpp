@@ -32,7 +32,7 @@ void dae::Transform::Update(float deltaTime)
 
 void dae::Transform::Render() const 
 {
-	SDL_Rect transformRectangle = {(int)m_Position.x, (int)m_Position.y, m_Width, m_Height};
-	SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
-	SDL_RenderFillRect(dae::Renderer::GetInstance().GetSDLRenderer(), &transformRectangle);
+	//SDL_Rect transformRectangle = {(int)m_Position.x, (int)m_Position.y, m_Width, m_Height};
+	//SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
+	//SDL_RenderFillRect(dae::Renderer::GetInstance().GetSDLRenderer(), &transformRectangle);
 }

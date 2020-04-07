@@ -20,6 +20,7 @@ namespace dae
 		Scene& operator=(Scene&& other) = delete;
 
 		int GetId() const;
+		void ListAllEntities() const;
 
 	private: 
 		explicit Scene(const std::string& name);

@@ -11,6 +11,15 @@ int dae::Scene::GetId() const
 	return m_Id;
 }
 
+void dae::Scene::ListAllEntities() const
+{
+	for (auto& object : m_Objects)
+	{
+		std::cout << "name of the entity: " << object->GetName() << " here are the components: \n";
+		object->ListComponents();
+	}
+}
+
 //first scene has index 0
 Scene::Scene(const std::string& name) : m_Name(name), m_Id{ m_IdCounter } { ++m_IdCounter; }
 
