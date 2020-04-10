@@ -19,6 +19,11 @@ void dae::Transform::SetPosition(const float x, const float y)
 	m_Position.y = y;
 }
 
+void dae::Transform::SetVelocity(float x, float y)
+{
+	m_Velocity = glm::vec2(x, y);
+}
+
 void dae::Transform::Initialize()
 {
 }

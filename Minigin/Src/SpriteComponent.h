@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <map>
 #include "SDL_rect.h"
 #include "Texture2D.h"
 #include "Animation.h"

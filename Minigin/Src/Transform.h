@@ -18,6 +18,8 @@ namespace dae
 		int GetHeight() const { return m_Height; }
 		int GetScale() const { return m_Scale; }
 		void SetPosition(float x, float y);
+		void SetVelocity(float x, float y);
+		const glm::vec2& GetVelocity() const { return m_Velocity; }
 
 		void Initialize() override;
 		void Update(float deltaTime) override;

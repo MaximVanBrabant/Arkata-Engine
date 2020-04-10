@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Transform.h"
+#include "GameObject.h"
 #include <SDL.h>
 
 using namespace dae;
@@ -52,8 +53,6 @@ void SpriteComponent::Render() const
 {
 	for (std::shared_ptr<Texture2D> x : m_pTextures)
 	{
-		//const auto pos = m_pTransform->GetPosition();
-		//Renderer::GetInstance().RenderTexture(*x, pos.x, pos.y);
 		Renderer::GetInstance().RenderTexture(*x, m_DestRect, m_SrcRect);
 	}
 }
@@ -65,8 +64,8 @@ void dae::SpriteComponent::Update(float deltaTime)
 	{
 		//modulus makes the result always smaller than numFames -> getTicks always changes
 		m_SrcRect.x = m_SrcRect.w * static_cast<int>((SDL_GetTicks() / m_AnimationSpeed) % m_NumFrames);
+		m_SrcRect.y = m_AnimationIndex * m_pTransform->GetHeight();
 	}
-	m_SrcRect.y = m_AnimationIndex * m_pTransform->GetHeight();
 
 
 	m_DestRect.x = static_cast<int>( m_pTransform->GetPosition().x);
@@ -98,9 +97,4 @@ std::shared_ptr<Texture2D> SpriteComponent::GetTexture(int id) const
 //	}
 //
 //
-//}
-
-//void SpriteComponent::SetPositionTexture(int id, float x, float y)
-//{
-//	//m_pTextures[id]->GetTranform()->SetPosition(x, y);
 //}

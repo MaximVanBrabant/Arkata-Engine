@@ -66,7 +66,7 @@ void dae::Minigin::LoadGame()
 	//pFrameCounter = gameObject->GetTextComponent();
 	//scene.Add(gameObject);
 
-	Game game{};
+	Game game{640,480};
 
 }
 
@@ -112,7 +112,7 @@ void dae::Minigin::Run()
 
 			//clamp
 			m_DeltaTime = (m_DeltaTime > 0.05f) ? 0.05f : m_DeltaTime;
-
+			std::cout << 1/m_DeltaTime << std::endl;
 			//if (accumulatedTime > cooldownTime)
 			//{
 			//	if (m_DeltaTime != 0)
