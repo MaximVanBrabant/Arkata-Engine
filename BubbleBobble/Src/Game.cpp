@@ -20,17 +20,26 @@ void Game::InitializeLevel01()
 
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo00");
 
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Projectile00");
-	gameObject->AddComponent<Transform>(30, 20, 50, 50, 32, 32, 1);
-	//sprite
-	auto& spriteComponent = gameObject->AddComponent<SpriteComponent>();
-	spriteComponent.AddTexture("./RESIZE/clockworker.png");
-	//spriteComponent.AddTexture("./RESIZE/apple.png");
-	scene.Add(gameObject);
+	//add textures
+	ResourceManager::GetInstance().AddTexture("clockworker", "./RESIZE/dino.png");
+	ResourceManager::GetInstance().AddTexture("apple", "/RESIZE/apple.png");
 
-	gameObject->HasComponent<Transform>();
+	//gameobject
+	//!!!! think about move semantics / copyping
+	std::shared_ptr<GameObject> apple = std::make_shared<GameObject>("apple");
+	apple->AddComponent<Transform>(30, 20, 50, 50, 32, 32, 1);
+	apple->AddComponent<SpriteComponent>("apple");
+	scene.Add(apple);
 
-	scene.ListAllEntities();
+	std::shared_ptr<GameObject> clockWorker = std::make_shared<GameObject>("clockWorker");
+	clockWorker->AddComponent<Transform>(320, 240, -50, 0, 32, 32, 1);
+	auto &sprite = clockWorker->AddComponent<SpriteComponent>("clockworker","idle", 2, 200, false);
+	sprite.AddAnimation("moving", 1, 2, 200);
+	sprite.Play("moving");
+	sprite.AddAnimation("jumping", 3, 1, 100);
+	sprite.Play("jumping");
+	scene.Add(clockWorker);
+
 	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("hello");
@@ -57,36 +66,6 @@ void Game::InitializeLevel01()
 
 void Game::InitializeLevel02()
 {
-	//auto& scene = SceneManager::GetInstance().CreateScene("Demo00");
-
-	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Projectile00");
-	//gameObject->AddComponent<Transform>(30, 20, 0, 0, 32, 32, 1);
-	////sprite
-	//auto& spriteComponent = gameObject->AddComponent<SpriteComponent>();
-	//spriteComponent.AddTexture("./RESIZE/apple.png");
-	//scene.Add(gameObject);
-
-
-	//gameObject->ListComponents();
-
-
-
-	//gameObject = std::make_shared<GameObject>("Projectile01");
-	//gameObject->AddComponent<Transform>(500, 500, -50, -80, 200, 100, 1);
-	//scene.Add(gameObject);
-	//gameObject->ListComponents();
-
-	//gameObject = std::make_shared<GameObject>("Projectile02");
-	//gameObject->AddComponent<Transform>(0, 500, 50, -80, 25, 90, 1);
-	//scene.Add(gameObject);
-	//gameObject->ListComponents();
-
-	//gameObject = std::make_shared<GameObject>("Projectile03");
-	//gameObject->AddComponent<Transform>(500, 0, -100, 100, 50, 50, 1);
-	//scene.Add(gameObject);
-	//gameObject->ListComponents();
-
-	//SceneManager::GetInstance().SetActiveScene(scene.GetId());
 }
 
 void Game::InitializeLevel03()

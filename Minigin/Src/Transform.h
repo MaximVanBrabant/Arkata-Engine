@@ -11,6 +11,7 @@ namespace dae
 	class Transform final : public Component
 	{
 	public:
+		//width and height is also what the srcRect will use / destRect = width * scale
 		Transform(int posX, int posY, int velX, int velY, int w, int h, int s);
 		const glm::vec2& GetPosition() const { return m_Position; }
 		int GetWidth() const { return m_Width; }

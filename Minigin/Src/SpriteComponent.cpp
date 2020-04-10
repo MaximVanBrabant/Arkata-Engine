@@ -3,8 +3,41 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Transform.h"
+#include <SDL.h>
 
 using namespace dae;
+
+dae::SpriteComponent::SpriteComponent(const std::string& textureId)
+	:m_DestRect{}, m_SrcRect{}, m_pTransform{nullptr},m_IsStatic{false},m_IsAnimated{false}
+{
+	m_pTextures.push_back(ResourceManager::GetInstance().GetTexture(textureId));
+}
+
+dae::SpriteComponent::SpriteComponent(const std::string& textureId, const std::string& animationId, unsigned int numFrames, unsigned int animationSpeed, bool isStatic)
+	:m_IsAnimated{true}, m_NumFrames{numFrames}, m_AnimationSpeed{animationSpeed}, m_IsStatic{isStatic}
+{
+		Animation singleAnimation = Animation(0, numFrames, animationSpeed);
+		m_Animations.emplace(animationId, singleAnimation);
+		m_AnimationIndex = 0;
+		m_CurAnimationName = animationId;
+
+	Play(m_CurAnimationName);
+	m_pTextures.push_back(ResourceManager::GetInstance().GetTexture(textureId));
+}
+
+void dae::SpriteComponent::AddAnimation(const std::string& animationId,unsigned int index, unsigned int numFrames, unsigned int animationSpeed)
+{
+	Animation newAnimation = Animation(index, numFrames, animationSpeed);
+	m_Animations.emplace(animationId, newAnimation);
+}
+
+void dae::SpriteComponent::Play(const std::string& animationName)
+{
+	m_NumFrames = m_Animations[animationName].m_NumFrames;
+	m_AnimationIndex = m_Animations[animationName].m_Index;
+	m_AnimationSpeed = m_Animations[animationName].m_AnimationSpeed;
+	m_CurAnimationName = animationName;
+}
 
 void dae::SpriteComponent::Initialize()
 {
@@ -28,16 +61,24 @@ void SpriteComponent::Render() const
 void dae::SpriteComponent::Update(float deltaTime)
 {
 	UNREFERENCED_PARAMETER(deltaTime);
-	m_DestRect.x = (int) m_pTransform->GetPosition().x;
-	m_DestRect.y = (int) m_pTransform->GetPosition().y;
+	if (m_IsAnimated)
+	{
+		//modulus makes the result always smaller than numFames -> getTicks always changes
+		m_SrcRect.x = m_SrcRect.w * static_cast<int>((SDL_GetTicks() / m_AnimationSpeed) % m_NumFrames);
+	}
+	m_SrcRect.y = m_AnimationIndex * m_pTransform->GetHeight();
+
+
+	m_DestRect.x = static_cast<int>( m_pTransform->GetPosition().x);
+	m_DestRect.y = static_cast<int>(m_pTransform->GetPosition().y);
 	m_DestRect.w = m_pTransform->GetWidth() * m_pTransform->GetScale();
 	m_DestRect.h = m_pTransform->GetHeight() * m_pTransform->GetScale();
 }
 
-int SpriteComponent::AddTexture(const std::string& filename)
+int SpriteComponent::AddTexture(const std::string& textureId)
 {
 	int id = (int)m_pTextures.size();
-	m_pTextures.push_back(ResourceManager::GetInstance().LoadTexture(filename));
+	m_pTextures.push_back(ResourceManager::GetInstance().GetTexture(textureId));
 
 	return id;
 }
@@ -46,6 +87,18 @@ std::shared_ptr<Texture2D> SpriteComponent::GetTexture(int id) const
 {
 	return m_pTextures[id];
 }
+
+//void dae::SpriteComponent::Play(const std::string& animationName, int time)
+//{
+//	if (m_PrevAnimationName != m_CurAnimationName)
+//	{
+//		m_PrevAnimationName = m_CurAnimationName;
+//		m_CurAnimationName = animationName;
+//
+//	}
+//
+//
+//}
 
 //void SpriteComponent::SetPositionTexture(int id, float x, float y)
 //{
