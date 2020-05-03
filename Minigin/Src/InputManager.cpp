@@ -2,25 +2,18 @@
 #include "InputManager.h"
 #include <SDL.h>
 
-
 bool dae::InputManager::ProcessInput()
 {
 	//controller
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	XInputGetState(0, &m_CurrentState);
 
-	while (SDL_PollEvent(&m_Event)) {
-		switch (m_Event.type)
-		{
-		case SDL_QUIT:
-			return false;
-			break;
-		case SDL_KEYDOWN:
-			std::cout << "key has been pressed " << std::endl;
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			break;
-		}
+	SDL_PollEvent(&m_Event);
+	switch (m_Event.type)
+	{
+	case SDL_QUIT:
+		return false;
+		break;
 	}
 
 	return true;

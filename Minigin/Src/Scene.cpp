@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
 #include "GameObject.h"
+#include "ColliderComponent.h"
+#include "Collision.h"
 
 using namespace dae;
 
@@ -32,10 +34,31 @@ void Scene::Add(const std::shared_ptr<GameObject>& object)
 
 void Scene::Update(float deltaTime)
 {
-	for(const auto& object : m_Objects)
+
+	//TODO: check first if the object is active or not
+	for (int i{}; i < m_Objects.size(); ++i)
 	{
-		object->Update(deltaTime);
+		auto& object = m_Objects[i];
+
+		if (object->IsActive())
+		{
+			object->Update(deltaTime);
+		}
+		else
+		{
+			m_NonActiveIndices.push_back(i);
+		}
 	}
+
+	//delete inactive objects
+	for (int index : m_NonActiveIndices)
+	{
+		m_Objects[index] = m_Objects[m_Objects.size() - 1];
+		m_Objects.pop_back();
+	}
+
+	CheckGameObjectCollisions();
+	m_NonActiveIndices.clear();
 }
 
 void Scene::Render() const
@@ -44,5 +67,75 @@ void Scene::Render() const
 	{
 		object->Render();
 	}
+}
+
+void dae::Scene::ApplyCollisionEffects(CollisionInfo collisionInfo)
+{
+	if (collisionInfo.collisionType == CollisionType::NO_COLLISION)
+	{
+		return;
+	}
+	else if (collisionInfo.collisionType == CollisionType::PLAYER_ENEMY_COLLISION)
+	{
+		collisionInfo.firstGameObject->Destroy();
+	}
+	else if (collisionInfo.collisionType == CollisionType::PLAYER_TILE_COLLISION || collisionInfo.collisionType == CollisionType::ENEMY_TILE_COLLISION)
+	{
+		//tile collision
+		std::cout << "tile collision" << std::endl;
+	}
+}
+
+CollisionInfo dae::Scene::CheckGameObjectCollisions()
+{
+	for (int i{ 0 }; i < m_Objects.size() - 1; ++i)
+	{
+		auto& firstGameObject = m_Objects[i];
+		if (firstGameObject->HasComponent<ColliderComponent>())
+		{
+			ColliderComponent* firstCollider = firstGameObject->GetComponent<ColliderComponent>();
+			for (int j{ i + 1 }; j < m_Objects.size(); ++j)
+			{
+				auto& secondGameObject = m_Objects[j];
+				if (firstGameObject->GetName().compare(secondGameObject->GetName()) != 0 && secondGameObject->HasComponent<ColliderComponent>())
+				{
+					ColliderComponent* secondCollider = secondGameObject->GetComponent<ColliderComponent>();
+					if (Collision::CheckRectangleCollision(firstCollider->GetCollider(), secondCollider->GetCollider()))
+					{
+						const std::string& firstTag = firstCollider->GetTag();
+						const std::string& secondTag = secondCollider->GetTag();
+
+						if(Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "ENEMY", "PLAYER"))
+						{
+							if(firstTag.compare("PLAYER") == 0)
+								ApplyCollisionEffects( CollisionInfo(CollisionType::PLAYER_ENEMY_COLLISION, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects (CollisionInfo(CollisionType::PLAYER_ENEMY_COLLISION, secondGameObject, firstGameObject));
+							continue;
+
+						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "TILE", "PLAYER"))
+						{
+							//this check is necessary to know which one is the first gameobject 
+							if (firstTag.compare("PLAYER") == 0)
+								ApplyCollisionEffects (CollisionInfo{ CollisionType::PLAYER_TILE_COLLISION, firstGameObject, secondGameObject });
+							else
+								ApplyCollisionEffects( CollisionInfo{ CollisionType::PLAYER_TILE_COLLISION, secondGameObject, firstGameObject });
+							continue;
+						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "ENEMY", "TILE"))
+						{
+							if (firstTag.compare("ENEMY") == 0)
+								ApplyCollisionEffects(CollisionInfo{ CollisionType::ENEMY_TILE_COLLISION, firstGameObject, secondGameObject });
+							else
+								ApplyCollisionEffects(CollisionInfo{ CollisionType::ENEMY_TILE_COLLISION, secondGameObject, firstGameObject });
+							continue;
+						}
+					}
+				}
+			}
+		}
+	}
+	return CollisionInfo(CollisionType::NO_COLLISION, nullptr, nullptr);
 }
 

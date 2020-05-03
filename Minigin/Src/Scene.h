@@ -3,6 +3,7 @@
 
 namespace dae
 {
+	struct CollisionInfo;
 	class GameObject;
 	class Scene
 	{
@@ -28,9 +29,14 @@ namespace dae
 		std::string m_Name;
 		unsigned int m_Id;
 		std::vector < std::shared_ptr<GameObject>> m_Objects{};
+		std::vector<int> m_NonActiveIndices;
 
 		//static
 		static unsigned int m_IdCounter; 
+
+		CollisionInfo CheckGameObjectCollisions();
+		void ApplyCollisionEffects(CollisionInfo collisionInfo);
+
 	};
 
 }

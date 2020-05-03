@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include <algorithm>
 #include "Game.h"
+#include "Constants.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -30,8 +31,8 @@ void dae::Minigin::Initialize()
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
+		WINDOWWIDTH,
+		WINDOWHEIGHT,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr) 
@@ -66,7 +67,7 @@ void dae::Minigin::LoadGame()
 	//pFrameCounter = gameObject->GetTextComponent();
 	//scene.Add(gameObject);
 
-	Game game{640,480};
+	Game game{};
 
 }
 
@@ -87,8 +88,6 @@ void dae::Minigin::Run()
 
 	LoadGame();
 
-	const Uint32 DESIRED_FRAMETIME{ MS_PER_SECOND / DESIRED_FPS };
-
 	//dont constantly update the framecounter
 	//const float cooldownTime{ 0.25f };
 	//float accumulatedTime{};
@@ -101,18 +100,18 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
-			int delayTime = DESIRED_FRAMETIME - (SDL_GetTicks() - m_TicksPrevFrame);
+			int delayTime = TIME_PER_FRAME - (SDL_GetTicks() - m_TicksPrevFrame);
 
 			if (delayTime > 0)
 				SDL_Delay(delayTime);
 			
 			//start gameLoop
-			m_DeltaTime = (SDL_GetTicks() - m_TicksPrevFrame) / float(MS_PER_SECOND);
+			m_DeltaTime = (SDL_GetTicks() - m_TicksPrevFrame) / 1000.f;
 			m_TicksPrevFrame = SDL_GetTicks();
 
 			//clamp
 			m_DeltaTime = (m_DeltaTime > 0.05f) ? 0.05f : m_DeltaTime;
-			std::cout << 1/m_DeltaTime << std::endl;
+			//std::cout << 1/m_DeltaTime << std::endl;
 			//if (accumulatedTime > cooldownTime)
 			//{
 			//	if (m_DeltaTime != 0)
@@ -124,6 +123,7 @@ void dae::Minigin::Run()
 			doContinue = input.ProcessInput();
 
 			sceneManager.Update(m_DeltaTime);
+
 			renderer.Render();
 			
 			//accumulatedTime += m_DeltaTime;

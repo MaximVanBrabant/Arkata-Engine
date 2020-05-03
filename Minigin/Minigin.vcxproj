@@ -205,6 +205,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Collision.h" />
+    <ClInclude Include="Src\Constants.h" />
+    <ClInclude Include="Src\RigidBodyComponent.h" />
     <ClInclude Include="Src\Level.h" />
     <ClInclude Include="Src\ColliderComponent.h" />
     <ClInclude Include="Src\Animation.h" />
@@ -228,6 +231,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\TileComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Collision.cpp" />
+    <ClCompile Include="Src\RigidBodyComponent.cpp" />
     <ClCompile Include="Src\Level.cpp" />
     <ClCompile Include="Src\ColliderComponent.cpp" />
     <ClCompile Include="Src\Animation.cpp" />

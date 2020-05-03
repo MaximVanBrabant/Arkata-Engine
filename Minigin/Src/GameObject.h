@@ -16,7 +16,7 @@ namespace dae
 		void Destroy();
 
 		GameObject();
-		GameObject(const std::string& name);
+		GameObject(const std::string& name, bool isStatic);
 		virtual ~GameObject();
 
 		//need to use raw pointers sometimes to make sure i dont make any copies of the gameObject (see documentation)
@@ -27,6 +27,7 @@ namespace dae
 
 		const std::string& GetName() const { return m_Name; }
 		bool IsActive() const { return m_IsActive; }
+		bool IsStatic() const { return m_IsStatic; }
 
 		template<typename T, typename... TArgs>
 		T& AddComponent(TArgs&&... args)
@@ -67,5 +68,6 @@ namespace dae
 		std::vector<std::shared_ptr<Component>> m_pComponents;
 		std::map<const type_info*, std::shared_ptr<Component>> m_ComponentTypeMap;
 		std::string m_Name;
+		bool m_IsStatic; //this gameobject wont be used to check for collisions
 	};
 }

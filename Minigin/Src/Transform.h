@@ -17,6 +17,8 @@ namespace dae
 		int GetWidth() const { return m_Width; }
 		int GetHeight() const { return m_Height; }
 		int GetScale() const { return m_Scale; }
+
+		void ApplyForceToVelocity(float x, float y);
 		void SetPosition(float x, float y);
 		void SetVelocity(float x, float y);
 		const glm::vec2& GetVelocity() const { return m_Velocity; }

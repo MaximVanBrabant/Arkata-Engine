@@ -7,12 +7,12 @@
 
 
 dae::GameObject::GameObject()
-	:m_IsActive{true}, m_Name{}, m_pComponents{}
+	:m_IsActive{true}, m_Name{}, m_pComponents{}, m_IsStatic{true}
 {
 }
 
-dae::GameObject::GameObject(const std::string& name)
-	:m_Name{name}, m_IsActive{true}, m_pComponents{}
+dae::GameObject::GameObject(const std::string& name, bool isStatic)
+	:m_Name{name}, m_IsActive{true}, m_pComponents{}, m_IsStatic{isStatic}
 {
 }
 
@@ -49,5 +49,6 @@ void dae::GameObject::Render() const
 void dae::GameObject::Destroy()
 {
 	//destroy it at the end of the game loop
+	std::cout << "this gameobject will be destroyed: " << this->GetName() << std::endl;
 	m_IsActive = false;
 }

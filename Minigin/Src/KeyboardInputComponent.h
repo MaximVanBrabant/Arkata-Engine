@@ -21,6 +21,10 @@ namespace dae
 		Transform* m_pTransform;
 		SpriteComponent* m_pSprite;
 
+		//this makes sure our movement doens't glitch
+		bool leftPress = false;
+		bool rightPress = false;
+
 		std::string GetSDLKeyStringCode(const std::string& input);
 	};
 }

@@ -13,6 +13,12 @@ dae::Transform::Transform(int posX, int posY, int velX, int velY, int w, int h, 
 {
 }
 
+void dae::Transform::ApplyForceToVelocity(float x, float y)
+{
+	m_Velocity.x += x;
+	m_Velocity.y += y;
+}
+
 void dae::Transform::SetPosition(const float x, const float y)
 {
 	m_Position.x = x;

@@ -5,6 +5,7 @@
 #include "TileComponent.h"
 #include "Scene.h"
 #include "ColliderComponent.h"
+#include "Constants.h"
 
 dae::Level::Level(const std::string& textureId, int scale, int tileSize, Scene& scene)
 	:m_TextureId{textureId}, m_Scale{scale}, m_TileSize{tileSize}, m_Scene{scene}
@@ -53,6 +54,6 @@ void dae::Level::AddTile(int sourceX, int sourceY, int x, int y)
 	std::shared_ptr<GameObject> tile{ std::make_shared<GameObject>() };
 	tile->AddComponent<Transform>(x, y, 0,0,m_TileSize, m_TileSize, m_Scale);
 	tile->AddComponent<TileComponent>(sourceX, sourceY, x , y,m_TileSize, m_Scale, m_TextureId);
-	tile->AddComponent<ColliderComponent>(640, 480);
+	tile->AddComponent<ColliderComponent>("TILE");
 	m_Scene.Add(tile);
 }

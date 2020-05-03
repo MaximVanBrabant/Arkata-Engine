@@ -8,12 +8,12 @@
 #include "KeyboardInputComponent.h"
 #include "ColliderComponent.h"
 #include "TileComponent.h"
+#include "RigidBodyComponent.h"
 #include "Level.h"
 
 using namespace dae;
 
-Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
-	:m_ScreenHeight{screenHeight}, m_ScreenWidth{screenWidth}
+Game::Game()
 {
 	InitializeLevel01();
 	InitializeLevel02();
@@ -31,48 +31,44 @@ void Game::InitializeLevel01()
 	ResourceManager::GetInstance().AddTexture("clockworker", "/RESIZE/clockworker.png");
 	ResourceManager::GetInstance().AddTexture("tiles", "/RESIZE/tiles.png");
 
-	std::shared_ptr<Level> pLevel = std::make_shared<Level>("tiles", 2,32, scene);
-	pLevel->LoadMap("./Data/RESIZE/level.map", 4, 4);
+	std::shared_ptr<Level> pLevel = std::make_shared<Level>("tiles", 1,32, scene);
+	pLevel->LoadMap("./Data/RESIZE/level.map", 20, 15);
 
 	//gameobject
 	//!!!! think about move semantics / copyping
-	std::shared_ptr<GameObject> apple = std::make_shared<GameObject>("apple");
+	std::shared_ptr<GameObject> apple = std::make_shared<GameObject>("apple", false);
 	apple->AddComponent<Transform>(30, 20, 0, 0, 32, 32, 1);
 	apple->AddComponent<SpriteComponent>("apple");
 	scene.Add(apple);
 
-	std::shared_ptr<GameObject> dino = std::make_shared<GameObject>("dino");
+	std::shared_ptr<GameObject> dino = std::make_shared<GameObject>("dino", false);
 	dino->AddComponent<Transform>(320, 240, 0, 0, 32, 32, 1);
 	auto &sprite = dino->AddComponent<SpriteComponent>("dino","idle", 2, 200, false);
-	dino->AddComponent<ColliderComponent>(m_ScreenWidth,m_ScreenHeight);
+	dino->AddComponent<ColliderComponent>("PLAYER");
 	dino->AddComponent<KeyboardInputComponent>("left", "right", "up", "space");
+	dino->AddComponent<RigidBodyComponent>();
 	sprite.AddAnimation("moving", 1, 2, 200);
 	sprite.AddAnimation("jumping", 3, 1, 100);
 	sprite.AddAnimation("shoot", 2, 1, 10);
 	scene.Add(dino);
 
-	std::shared_ptr<GameObject> clockworker = std::make_shared<GameObject>("clockworker");
+	std::shared_ptr<GameObject> clockworker = std::make_shared<GameObject>("clockworker", false);
 	clockworker->AddComponent<Transform>(100, 100, 0, 0, 32, 32, 1);
 	clockworker->AddComponent<SpriteComponent>("clockworker", "standard", 2,200, false);
-	clockworker->AddComponent<ColliderComponent>(m_ScreenWidth, m_ScreenHeight);
+	clockworker->AddComponent<RigidBodyComponent>();
+	clockworker->AddComponent<ColliderComponent>("ENEMY");
 	scene.Add(clockworker);
 
-	std::shared_ptr<GameObject> dino1 = std::make_shared<GameObject>("dino1");
-	dino1->AddComponent<Transform>(400, 300, 0, 0, 32, 32, 1);
+	std::shared_ptr<GameObject> dino1 = std::make_shared<GameObject>("dino1", false);
+	dino1->AddComponent<Transform>(420, 300, 0, 0, 32, 32, 1);
 	auto& sprite1 = dino1->AddComponent<SpriteComponent>("dino", "idle", 2, 200, false);
-	dino1->AddComponent<ColliderComponent>(m_ScreenWidth, m_ScreenHeight);
-	dino1->AddComponent<KeyboardInputComponent>("A", "D", "W", "S");
+	dino1->AddComponent<ColliderComponent>("PLAYER");
+	dino1->AddComponent<KeyboardInputComponent>("a", "d", "w", "s");
 	sprite1.AddAnimation("moving", 1, 2, 200);
 	sprite1.AddAnimation("jumping", 3, 1, 100);
 	sprite1.AddAnimation("shoot", 2, 1, 10);
 	scene.Add(dino1);
 
-
-
-
-
-	//std::shared_ptr<GameObject> tile = std::make_shared<GameObject>("tile");
-	//tile->AddComponent<TileComponent>();
 
 	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
