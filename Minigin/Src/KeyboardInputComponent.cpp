@@ -6,6 +6,7 @@
 #include "SDL_keycode.h"
 #include "InputManager.h"
 #include "GameObject.h"
+#include "ColliderComponent.h"
 
 
 //programm so you can add buttons easily
@@ -57,10 +58,6 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 			m_pTransform->SetVelocity(velocity, m_pTransform->GetVelocity().y);
 			m_pSprite->Play("moving");
 		}
-		//else
-		//{
-		//	m_pTransform->SetVelocity(0, m_pTransform->GetVelocity().y);
-		//}
 		
 
 		if (keyCode.compare(m_ShootInput) == 0)
@@ -69,9 +66,9 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 		}
 		if (keyCode.compare(m_JumpInput) == 0)
 		{
+		//	m_Owner->GetComponent<ColliderComponent>()->SetIsGrounded(false);
 			m_pTransform->SetVelocity(m_pTransform->GetVelocity().x, jumpHeight);
 			m_pSprite->Play("jumping");
-
 		}
 	}
 

@@ -51,7 +51,7 @@ void dae::Level::LoadMap(const std::string& filePath, int mapSizeX, int mapSizeY
 void dae::Level::AddTile(int sourceX, int sourceY, int x, int y)
 {
 	//add transform
-	std::shared_ptr<GameObject> tile{ std::make_shared<GameObject>() };
+	std::shared_ptr<GameObject> tile{ std::make_shared<GameObject>("tile", true) };
 	tile->AddComponent<Transform>(x, y, 0,0,m_TileSize, m_TileSize, m_Scale);
 	tile->AddComponent<TileComponent>(sourceX, sourceY, x , y,m_TileSize, m_Scale, m_TextureId);
 	tile->AddComponent<ColliderComponent>("TILE");

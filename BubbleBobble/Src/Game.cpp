@@ -59,15 +59,15 @@ void Game::InitializeLevel01()
 	clockworker->AddComponent<ColliderComponent>("ENEMY");
 	scene.Add(clockworker);
 
-	std::shared_ptr<GameObject> dino1 = std::make_shared<GameObject>("dino1", false);
-	dino1->AddComponent<Transform>(420, 300, 0, 0, 32, 32, 1);
-	auto& sprite1 = dino1->AddComponent<SpriteComponent>("dino", "idle", 2, 200, false);
-	dino1->AddComponent<ColliderComponent>("PLAYER");
-	dino1->AddComponent<KeyboardInputComponent>("a", "d", "w", "s");
-	sprite1.AddAnimation("moving", 1, 2, 200);
-	sprite1.AddAnimation("jumping", 3, 1, 100);
-	sprite1.AddAnimation("shoot", 2, 1, 10);
-	scene.Add(dino1);
+	//std::shared_ptr<GameObject> dino1 = std::make_shared<GameObject>("dino1", false);
+	//dino1->AddComponent<Transform>(420, 300, 0, 0, 32, 32, 1);
+	//auto& sprite1 = dino1->AddComponent<SpriteComponent>("dino", "idle", 2, 200, false);
+	////dino1->AddComponent<ColliderComponent>("PLAYER");
+	//dino1->AddComponent<KeyboardInputComponent>("a", "d", "w", "s");
+	//sprite1.AddAnimation("moving", 1, 2, 200);
+	//sprite1.AddAnimation("jumping", 3, 1, 100);
+	//sprite1.AddAnimation("shoot", 2, 1, 10);
+	//scene.Add(dino1);
 
 
 	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");

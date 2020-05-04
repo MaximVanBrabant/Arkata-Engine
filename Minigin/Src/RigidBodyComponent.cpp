@@ -10,7 +10,8 @@ void dae::RigidBodyComponent::Initialize()
 
 void dae::RigidBodyComponent::Update(float deltaTime)
 {
-	//sdl y component goes positive downwards thats why +
-	//m_pTransform->SetPosition(prevPos.x, prevPos.y + m_Gravity * deltaTime);
-	m_pTransform->ApplyForceToVelocity(0, m_Gravity * deltaTime);
+	if (m_GravityOn)
+	{
+		m_pTransform->ApplyForceToVelocity(0, m_Gravity * deltaTime);
+	}
 }

@@ -19,6 +19,8 @@ namespace dae
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
+		const std::vector <std::shared_ptr<GameObject>>& GetGameObjects() const { return m_Objects; }
+
 
 		int GetId() const;
 		void ListAllEntities() const;
@@ -33,9 +35,6 @@ namespace dae
 
 		//static
 		static unsigned int m_IdCounter; 
-
-		CollisionInfo CheckGameObjectCollisions();
-		void ApplyCollisionEffects(CollisionInfo collisionInfo);
 
 	};
 

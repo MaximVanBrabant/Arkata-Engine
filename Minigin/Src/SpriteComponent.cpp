@@ -86,15 +86,3 @@ std::shared_ptr<Texture2D> SpriteComponent::GetTexture(int id) const
 {
 	return m_pTextures[id];
 }
-
-//void dae::SpriteComponent::Play(const std::string& animationName, int time)
-//{
-//	if (m_PrevAnimationName != m_CurAnimationName)
-//	{
-//		m_PrevAnimationName = m_CurAnimationName;
-//		m_CurAnimationName = animationName;
-//
-//	}
-//
-//
-//}

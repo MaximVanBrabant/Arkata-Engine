@@ -31,6 +31,9 @@ void dae::ColliderComponent::Update(float deltaTime)
 	m_Collider.w = m_pTransform->GetWidth() * m_pTransform->GetScale();
 	m_Collider.h = m_pTransform->GetHeight() * m_pTransform->GetScale();
 
+	m_CenterX = m_Collider.x + m_Collider.w / 2.0f;
+	m_CenterY = m_Collider.y + m_Collider.h / 2.0f;
+
 	//check for collisions
 	if (m_Collider.x < 0)
 	{
@@ -49,11 +52,9 @@ void dae::ColliderComponent::Update(float deltaTime)
 	{
 		m_Collider.y = WINDOWHEIGHT - m_pTransform->GetHeight();
 
-		//just for testing
+		//just for testing move this code to somehwere else ->
 
 		m_pTransform->SetVelocity(m_pTransform->GetVelocity().x, 0);
-
-
 	}
 
 	m_pTransform->SetPosition(static_cast<float>(m_Collider.x), static_cast<float>(m_Collider.y));

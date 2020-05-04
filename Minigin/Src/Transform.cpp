@@ -19,6 +19,12 @@ void dae::Transform::ApplyForceToVelocity(float x, float y)
 	m_Velocity.y += y;
 }
 
+void dae::Transform::ApplyOffsetToPosition(float x, float y)
+{
+	m_Position.x += x;
+	m_Position.y += y;
+}
+
 void dae::Transform::SetPosition(const float x, const float y)
 {
 	m_Position.x = x;

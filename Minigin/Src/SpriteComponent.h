@@ -22,7 +22,6 @@ namespace dae
 		//animation on the same sprite
 		void AddAnimation(const std::string& animationId,unsigned int index, unsigned int numFrames, unsigned int animationSpeed);
 		void Play(const std::string& animationName);
-		//void Play(const std::string& animationName, int time);
 	private:
 		//pointer to the transform of the object because with a shared smart pointer it would copy the object because of the dynamic cast and so I would have a pointer to a new object
 		Transform* m_pTransform;
