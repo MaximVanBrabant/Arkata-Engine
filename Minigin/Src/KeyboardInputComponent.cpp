@@ -7,6 +7,7 @@
 #include "InputManager.h"
 #include "GameObject.h"
 #include "ColliderComponent.h"
+#include "PlayerSM.h"
 
 
 //programm so you can add buttons easily
@@ -39,64 +40,68 @@ void dae::KeyboardInputComponent::Initialize()
 void dae::KeyboardInputComponent::Update(float deltaTime)
 {
 	UNREFERENCED_PARAMETER(deltaTime);
-	float velocity = 100;
-	float jumpHeight = -200.f;
-	if (InputManager::GetInstance().m_Event.type == SDL_KEYDOWN)
+
+	PlayerSM* playerSM = nullptr;
+	if (m_Owner->HasComponent<PlayerSM>())
 	{
-		//implement state switches here for state machine -> also change movement vector
-		std::string keyCode = std::to_string(InputManager::GetInstance().m_Event.key.keysym.sym);
+		playerSM = m_Owner->GetComponent<PlayerSM>();
 
-		if (keyCode.compare(m_LeftInput) == 0)
+		if (InputManager::GetInstance().m_Event.type == SDL_KEYDOWN)
 		{
-			leftPress = true;
-			m_pTransform->SetVelocity(-velocity, m_pTransform->GetVelocity().y);
-			m_pSprite->Play("moving");
-		}
-		else if (keyCode.compare(m_RightInput) == 0)
-		{
-			rightPress = true;
-			m_pTransform->SetVelocity(velocity, m_pTransform->GetVelocity().y);
-			m_pSprite->Play("moving");
-		}
-		
+			//implement state switches here for state machine -> also change movement vector
+			std::string keyCode = std::to_string(InputManager::GetInstance().m_Event.key.keysym.sym);
 
-		if (keyCode.compare(m_ShootInput) == 0)
-		{
-			m_pSprite->Play("shoot");
+			if (keyCode.compare(m_LeftInput) == 0)
+			{
+				m_LeftPress = true;
+				playerSM->Displace(Direction::left);
+			}
+			else if (keyCode.compare(m_RightInput) == 0)
+			{
+				m_RightPress = true;
+				playerSM->Displace(Direction::right);
+			}
+
+
+			if (keyCode.compare(m_ShootInput) == 0)
+			{
+				playerSM->ShootBell(Direction::left);
+			}
+
+			if (keyCode.compare(m_JumpInput) == 0)
+			{
+				playerSM->JumpIntoAir();
+			}
+
 		}
-		if (keyCode.compare(m_JumpInput) == 0)
+
+		if (InputManager::GetInstance().m_Event.type == SDL_KEYUP)
 		{
-		//	m_Owner->GetComponent<ColliderComponent>()->SetIsGrounded(false);
-			m_pTransform->SetVelocity(m_pTransform->GetVelocity().x, jumpHeight);
-			m_pSprite->Play("jumping");
+			std::string keyCode = std::to_string(InputManager::GetInstance().m_Event.key.keysym.sym);
+
+			if (keyCode.compare(m_LeftInput) == 0)
+			{
+				m_LeftPress = false;
+				if (!m_LeftPress && !m_RightPress)
+				{
+					playerSM->StandingStill();
+
+				}
+			}
+			if (keyCode.compare(m_RightInput) == 0)
+			{
+				m_RightPress = false;
+				if (!m_LeftPress && !m_RightPress)
+				{
+					playerSM->StandingStill();
+				}
+			}
+
+			if (keyCode.compare(m_ShootInput) == 0)
+			{
+				playerSM->StandingStill();
+			}
+
 		}
 	}
-
-	if (InputManager::GetInstance().m_Event.type == SDL_KEYUP)
-	{
-		std::string keyCode = std::to_string(InputManager::GetInstance().m_Event.key.keysym.sym);
-
-		if (keyCode.compare(m_LeftInput) == 0)
-		{
-			leftPress = false;
-		}
-		if(keyCode.compare(m_RightInput) == 0)
-		{
-			rightPress = false;
-		}
-
-
-		if (!leftPress && !rightPress)
-		{
-			m_pTransform->SetVelocity(0, m_pTransform->GetVelocity().y);
-			m_pSprite->Play("idle");
-		}
-
-		if (keyCode.compare(m_ShootInput) == 0)
-		{
-			m_pSprite->Play("idle");
-		}
-
-	}
-	
 }

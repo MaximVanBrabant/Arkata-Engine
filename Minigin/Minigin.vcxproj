@@ -205,6 +205,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\JumpPlayerState.h" />
+    <ClInclude Include="Src\MovePlayerState.h" />
+    <ClInclude Include="Src\IdlePlayerState.h" />
+    <ClInclude Include="Src\PlayerState.h" />
+    <ClInclude Include="Src\PlayerSM.h" />
     <ClInclude Include="Src\CollisionManager.h" />
     <ClInclude Include="Src\Collision.h" />
     <ClInclude Include="Src\Constants.h" />
@@ -232,6 +237,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\TileComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\JumpPlayerState.cpp" />
+    <ClCompile Include="Src\MovePlayerState.cpp" />
+    <ClCompile Include="Src\IdlePlayerState.cpp" />
+    <ClCompile Include="Src\PlayerSM.cpp" />
     <ClCompile Include="Src\CollisionManager.cpp" />
     <ClCompile Include="Src\Collision.cpp" />
     <ClCompile Include="Src\RigidBodyComponent.cpp" />

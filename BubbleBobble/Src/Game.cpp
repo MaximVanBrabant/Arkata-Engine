@@ -10,6 +10,7 @@
 #include "TileComponent.h"
 #include "RigidBodyComponent.h"
 #include "Level.h"
+#include "PlayerSM.h"
 
 using namespace dae;
 
@@ -47,6 +48,7 @@ void Game::InitializeLevel01()
 	dino->AddComponent<ColliderComponent>("PLAYER");
 	dino->AddComponent<KeyboardInputComponent>("left", "right", "up", "space");
 	dino->AddComponent<RigidBodyComponent>();
+	dino->AddComponent<PlayerSM>();
 	sprite.AddAnimation("moving", 1, 2, 200);
 	sprite.AddAnimation("jumping", 3, 1, 100);
 	sprite.AddAnimation("shoot", 2, 1, 10);

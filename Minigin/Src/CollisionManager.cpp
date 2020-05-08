@@ -31,24 +31,51 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 		Transform* playerTransform{ collisionInfo.firstGameObject->GetComponent<Transform>() };
 		RigidBodyComponent* playerRigid{collisionInfo.firstGameObject->GetComponent<RigidBodyComponent>()};
 
-		if (playerCollider->GetCenterY() < tileCollider->GetCenterY() && !playerCollider->GetIsGrounded())
+		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) < abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
 		{
-			playerTransform->SetPosition(playerTransform->GetPosition().x,static_cast<float>(tileCollider->GetCollider().y - tileCollider->GetCollider().h));
-			playerTransform->SetVelocity(playerTransform->GetVelocity().x, 0);
-			playerRigid->EnableGravity(false);
-			playerCollider->SetIsGrounded(true);
-		}
 
+			if (playerCollider->GetCenterY() < tileCollider->GetCenterY() && !playerCollider->GetIsGrounded() && playerTransform->GetVelocity().y > 0.0f)
+			{
+				playerTransform->SetPosition(playerTransform->GetPosition().x, static_cast<float>(tileCollider->GetCollider().y - tileCollider->GetCollider().h));
+				playerTransform->SetVelocity(playerTransform->GetVelocity().x, 0);
+				playerRigid->EnableGravity(false);
+				playerCollider->SetIsGrounded(true);
+			}
+		}
+		else
+		{
+			if (playerTransform->GetVelocity().y > 0.0f || playerCollider->GetIsGrounded())
+			{
+				if (playerCollider->GetCenterX() < tileCollider->GetCenterX())
+				{
+					playerTransform->SetPosition(static_cast<float>(tileCollider->GetCollider().x - playerCollider->GetCollider().w), playerTransform->GetPosition().y);
+				}
+				if (playerCollider->GetCenterX() > tileCollider->GetCenterX())
+				{
+					playerTransform->SetPosition(static_cast<float>(tileCollider->GetCollider().x + tileCollider->GetCollider().w), playerTransform->GetPosition().y);
+
+				}
+			}
+
+		}
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_NONE_COLLISION)
 	{
 		//you are in the air
-		if (collisionInfo.firstGameObject->HasComponent<RigidBodyComponent>() && collisionInfo.firstGameObject->HasComponent<ColliderComponent>())
+		if (collisionInfo.firstGameObject->HasComponent<RigidBodyComponent>() && collisionInfo.firstGameObject->HasComponent<ColliderComponent>() && collisionInfo.firstGameObject->HasComponent<Transform>())
 		{
 			ColliderComponent* playerCollider{ collisionInfo.firstGameObject->GetComponent<ColliderComponent>() };
 			RigidBodyComponent* playerRigid{ collisionInfo.firstGameObject->GetComponent<RigidBodyComponent>() };
-			playerCollider->SetIsGrounded(false);
-			playerRigid->EnableGravity(true);
+			Transform* playerTransform{ collisionInfo.firstGameObject->GetComponent<Transform>() };
+
+			if (playerCollider->GetIsGrounded())
+			{
+				playerCollider->SetIsGrounded(false);
+				//instantly sets my velocity instead of gradually decreasing over time with the rigidbody gravity
+				if (playerTransform->GetVelocity().y == 0)
+					playerTransform->SetVelocity(playerTransform->GetVelocity().x, 200.f);
+				playerRigid->EnableGravity(true);
+			}
 		}
 	}
 }

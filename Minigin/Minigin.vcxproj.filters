@@ -34,6 +34,18 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{525b279b-46c4-4a70-9f3a-d0fc4e0f9e85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\PlayerStateMachine">
+      <UniqueIdentifier>{19dba0bd-20c3-49c1-91c4-f28aa6a4a27e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PlayerStateMachine\PlayerStates">
+      <UniqueIdentifier>{d4d87420-fabf-43a6-be5e-9bda04435c1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlayerStateMachine">
+      <UniqueIdentifier>{8b511123-0afb-44db-99c8-22a248147563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlayerStateMachine\PlayerStates">
+      <UniqueIdentifier>{91fb5199-c95f-4da3-94dc-1d3c08b133f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\FPSComponent.h">
@@ -111,6 +123,21 @@
     <ClInclude Include="Src\CollisionManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Src\PlayerState.h">
+      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PlayerSM.h">
+      <Filter>Header Files\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\JumpPlayerState.h">
+      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\IdlePlayerState.h">
+      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MovePlayerState.h">
+      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\FPSComponent.cpp">
@@ -178,6 +205,18 @@
     </ClCompile>
     <ClCompile Include="Src\CollisionManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PlayerSM.cpp">
+      <Filter>Source Files\PlayerStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\IdlePlayerState.cpp">
+      <Filter>Source Files\PlayerStateMachine\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\JumpPlayerState.cpp">
+      <Filter>Source Files\PlayerStateMachine\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MovePlayerState.cpp">
+      <Filter>Source Files\PlayerStateMachine\PlayerStates</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
