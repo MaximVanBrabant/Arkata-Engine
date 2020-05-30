@@ -7,7 +7,7 @@
 #include "Constants.h"
 #include "RigidBodyComponent.h"
 dae::ColliderComponent::ColliderComponent(const std::string& tag)
-	:m_pTransform{ nullptr }, m_Collider{}, m_Tag{tag}
+	:m_pTransform{ nullptr }, m_Collider{}, m_Tag{ tag }, m_OffsetX{}, m_OffsetY{}
 {
 }
 void dae::ColliderComponent::Initialize()
@@ -26,8 +26,8 @@ void dae::ColliderComponent::Update(float deltaTime)
 {
 	UNREFERENCED_PARAMETER(deltaTime);
 
-	m_Collider.x = static_cast<int>(m_pTransform->GetPosition().x);
-	m_Collider.y = static_cast<int>(m_pTransform->GetPosition().y);
+	m_Collider.x = static_cast<int>(m_pTransform->GetPosition().x) + m_OffsetX;
+	m_Collider.y = static_cast<int>(m_pTransform->GetPosition().y) + m_OffsetY;
 	m_Collider.w = m_pTransform->GetWidth() * m_pTransform->GetScale();
 	m_Collider.h = m_pTransform->GetHeight() * m_pTransform->GetScale();
 
@@ -54,15 +54,18 @@ void dae::ColliderComponent::Update(float deltaTime)
 
 		//just for testing move this code to somehwere else ->
 
-		m_pTransform->SetVelocity(m_pTransform->GetVelocity().x, 0);
+		//m_pTransform->SetVelocity(m_pTransform->GetVelocity().x, 0);
 	}
 
-	m_pTransform->SetPosition(static_cast<float>(m_Collider.x), static_cast<float>(m_Collider.y));
+	//	m_pTransform->SetPosition(static_cast<float>(m_Collider.x), static_cast<float>(m_Collider.y));
 }
 
 void dae::ColliderComponent::Render() const
 {
-	SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
-	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_Collider);
+	if (m_Enabled)
+	{
+		SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
+		//SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_Collider);
+	}
 	
 }

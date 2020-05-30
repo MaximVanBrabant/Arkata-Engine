@@ -13,6 +13,8 @@ namespace dae
 		friend class Singleton<CollisionManager>;
 		void CheckGameObjectCollisions();
 		void ApplyCollisionEffects(CollisionInfo collisionInfo);
+
+		void CheckCollisionOnAIColliders(const std::vector<int>& vIndicesOfEnemies);
 	};
 }
 

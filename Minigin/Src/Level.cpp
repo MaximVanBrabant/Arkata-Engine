@@ -54,6 +54,11 @@ void dae::Level::AddTile(int sourceX, int sourceY, int x, int y)
 	std::shared_ptr<GameObject> tile{ std::make_shared<GameObject>("tile", true) };
 	tile->AddComponent<Transform>(x, y, 0,0,m_TileSize, m_TileSize, m_Scale);
 	tile->AddComponent<TileComponent>(sourceX, sourceY, x , y,m_TileSize, m_Scale, m_TextureId);
-	tile->AddComponent<ColliderComponent>("TILE");
+	if (sourceX == 1 * m_TileSize)
+		tile->AddComponent<ColliderComponent>("TILE");
+	else if (sourceX == 2 * m_TileSize)
+		tile->AddComponent<ColliderComponent>("HORIZONTAL_SOLID_TILE");
+	else if (sourceX == 3 * m_TileSize)
+		tile->AddComponent<ColliderComponent>("VERTICAL_SOLID_TILE");
 	m_Scene.Add(tile);
 }

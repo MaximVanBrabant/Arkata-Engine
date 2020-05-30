@@ -205,6 +205,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\AttackEnemyState.h" />
+    <ClInclude Include="Src\EnemySM.h" />
+    <ClInclude Include="Src\EnemyState.h" />
+    <ClInclude Include="Src\JumpEnemyState.h" />
     <ClInclude Include="Src\JumpPlayerState.h" />
     <ClInclude Include="Src\MovePlayerState.h" />
     <ClInclude Include="Src\IdlePlayerState.h" />
@@ -229,6 +233,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\ResourceManager.h" />
     <ClInclude Include="Src\Scene.h" />
     <ClInclude Include="Src\SceneManager.h" />
+    <ClInclude Include="Src\SeekEnemyState.h" />
     <ClInclude Include="Src\Singleton.h" />
     <ClInclude Include="Src\SpriteComponent.h" />
     <ClInclude Include="Src\TextComponent.h" />
@@ -237,6 +242,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\TileComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\AttackEnemyState.cpp" />
+    <ClCompile Include="Src\EnemySM.cpp" />
+    <ClCompile Include="Src\JumpEnemyState.cpp" />
     <ClCompile Include="Src\JumpPlayerState.cpp" />
     <ClCompile Include="Src\MovePlayerState.cpp" />
     <ClCompile Include="Src\IdlePlayerState.cpp" />
@@ -264,6 +272,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Src\ResourceManager.cpp" />
     <ClCompile Include="Src\Scene.cpp" />
     <ClCompile Include="Src\SceneManager.cpp" />
+    <ClCompile Include="Src\SeekEnemyState.cpp" />
     <ClCompile Include="Src\SpriteComponent.cpp" />
     <ClCompile Include="Src\TextComponent.cpp" />
     <ClCompile Include="Src\Texture2D.cpp" />

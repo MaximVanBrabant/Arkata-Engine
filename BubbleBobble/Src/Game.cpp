@@ -11,6 +11,7 @@
 #include "RigidBodyComponent.h"
 #include "Level.h"
 #include "PlayerSM.h"
+#include "EnemySM.h"
 
 using namespace dae;
 
@@ -38,28 +39,48 @@ void Game::InitializeLevel01()
 	//gameobject
 	//!!!! think about move semantics / copyping
 	std::shared_ptr<GameObject> apple = std::make_shared<GameObject>("apple", false);
-	apple->AddComponent<Transform>(30, 20, 0, 0, 32, 32, 1);
+	apple->AddComponent<Transform>(70, 20, 0, 0, 32, 32, 1);
+	apple->AddComponent<ColliderComponent>("ITEM");
+	apple->AddComponent<RigidBodyComponent>();
 	apple->AddComponent<SpriteComponent>("apple");
 	scene.Add(apple);
 
 	std::shared_ptr<GameObject> dino = std::make_shared<GameObject>("dino", false);
-	dino->AddComponent<Transform>(320, 240, 0, 0, 32, 32, 1);
+	dino->AddComponent<Transform>(320, 240, 0, 0, 32, 32,1);
+	dino->AddComponent<PlayerSM>();
 	auto &sprite = dino->AddComponent<SpriteComponent>("dino","idle", 2, 200, false);
+	dino->AddComponent<RigidBodyComponent>();
 	dino->AddComponent<ColliderComponent>("PLAYER");
 	dino->AddComponent<KeyboardInputComponent>("left", "right", "up", "space");
-	dino->AddComponent<RigidBodyComponent>();
-	dino->AddComponent<PlayerSM>();
 	sprite.AddAnimation("moving", 1, 2, 200);
 	sprite.AddAnimation("jumping", 3, 1, 100);
 	sprite.AddAnimation("shoot", 2, 1, 10);
 	scene.Add(dino);
 
 	std::shared_ptr<GameObject> clockworker = std::make_shared<GameObject>("clockworker", false);
-	clockworker->AddComponent<Transform>(100, 100, 0, 0, 32, 32, 1);
+	clockworker->AddComponent<Transform>(80, 200, 0, 0, 32, 32, 1);
 	clockworker->AddComponent<SpriteComponent>("clockworker", "standard", 2,200, false);
 	clockworker->AddComponent<RigidBodyComponent>();
 	clockworker->AddComponent<ColliderComponent>("ENEMY");
+	clockworker->AddComponent<EnemySM>(dino);
 	scene.Add(clockworker);
+
+	std::shared_ptr<GameObject> clockworker_1 = std::make_shared<GameObject>("clockworker_1", false);
+	clockworker_1->AddComponent<Transform>(250, 200, 0, 0, 32, 32, 1);
+	clockworker_1->AddComponent<SpriteComponent>("clockworker", "standard", 2, 200, false);
+	clockworker_1->AddComponent<RigidBodyComponent>();
+	clockworker_1->AddComponent<ColliderComponent>("ENEMY");
+	clockworker_1->AddComponent<EnemySM>(dino);
+	scene.Add(clockworker_1);
+
+
+	std::shared_ptr<GameObject> clockworker_2 = std::make_shared<GameObject>("clockworker_2", false);
+	clockworker_2->AddComponent<Transform>(400, 100, 0, 0, 32, 32, 1);
+	clockworker_2->AddComponent<SpriteComponent>("clockworker", "standard", 2, 200, false);
+	clockworker_2->AddComponent<RigidBodyComponent>();
+	clockworker_2->AddComponent<ColliderComponent>("ENEMY");
+	clockworker_2->AddComponent<EnemySM>(dino);
+	scene.Add(clockworker_2);
 
 	//std::shared_ptr<GameObject> dino1 = std::make_shared<GameObject>("dino1", false);
 	//dino1->AddComponent<Transform>(420, 300, 0, 0, 32, 32, 1);

@@ -34,17 +34,35 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{525b279b-46c4-4a70-9f3a-d0fc4e0f9e85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\PlayerStateMachine">
+    <Filter Include="Header Files\StateMachines">
+      <UniqueIdentifier>{41b8f862-f43c-4ea5-922b-468b89e68e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateMachines\PlayerStateMachine">
       <UniqueIdentifier>{19dba0bd-20c3-49c1-91c4-f28aa6a4a27e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\PlayerStateMachine\PlayerStates">
+    <Filter Include="Header Files\StateMachines\PlayerStateMachine\PlayerStates">
       <UniqueIdentifier>{d4d87420-fabf-43a6-be5e-9bda04435c1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PlayerStateMachine">
+    <Filter Include="Header Files\StateMachines\EnemyStateMachine">
+      <UniqueIdentifier>{96584105-f5a1-4efe-b64c-2e65873a89f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines">
+      <UniqueIdentifier>{b264ba51-3ad4-48c4-a9c2-1d40f424086f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines\PlayerStateMachine">
       <UniqueIdentifier>{8b511123-0afb-44db-99c8-22a248147563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PlayerStateMachine\PlayerStates">
+    <Filter Include="Source Files\StateMachines\PlayerStateMachine\PlayerStates">
       <UniqueIdentifier>{91fb5199-c95f-4da3-94dc-1d3c08b133f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines\EnemyStateMachine">
+      <UniqueIdentifier>{af27ebe7-3703-41e5-8380-68c4694e5b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates">
+      <UniqueIdentifier>{8c73c4f0-21cb-477c-b9ad-6e30b195c4bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates">
+      <UniqueIdentifier>{ffc0a790-128f-4725-ba3e-1d5048b55d55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,19 +142,34 @@
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Src\PlayerState.h">
-      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\PlayerSM.h">
-      <Filter>Header Files\PlayerStateMachine</Filter>
+      <Filter>Header Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\JumpPlayerState.h">
-      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+      <Filter>Header Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\IdlePlayerState.h">
-      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+      <Filter>Header Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\MovePlayerState.h">
-      <Filter>Header Files\PlayerStateMachine\PlayerStates</Filter>
+      <Filter>Header Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PlayerSM.h">
+      <Filter>Header Files\StateMachines\PlayerStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EnemySM.h">
+      <Filter>Header Files\StateMachines\EnemyStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EnemyState.h">
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SeekEnemyState.h">
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\JumpEnemyState.h">
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AttackEnemyState.h">
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -207,16 +240,28 @@
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Src\PlayerSM.cpp">
-      <Filter>Source Files\PlayerStateMachine</Filter>
+      <Filter>Source Files\StateMachines\PlayerStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Src\IdlePlayerState.cpp">
-      <Filter>Source Files\PlayerStateMachine\PlayerStates</Filter>
+      <Filter>Source Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
     </ClCompile>
     <ClCompile Include="Src\JumpPlayerState.cpp">
-      <Filter>Source Files\PlayerStateMachine\PlayerStates</Filter>
+      <Filter>Source Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
     </ClCompile>
     <ClCompile Include="Src\MovePlayerState.cpp">
-      <Filter>Source Files\PlayerStateMachine\PlayerStates</Filter>
+      <Filter>Source Files\StateMachines\PlayerStateMachine\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EnemySM.cpp">
+      <Filter>Source Files\StateMachines\EnemyStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SeekEnemyState.cpp">
+      <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\JumpEnemyState.cpp">
+      <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AttackEnemyState.cpp">
+      <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

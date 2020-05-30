@@ -99,7 +99,18 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 
 			if (keyCode.compare(m_ShootInput) == 0)
 			{
-				playerSM->StandingStill();
+				if (m_pTransform->GetVelocity().x > 0)
+				{
+					playerSM->Displace(Direction::right);
+				}
+				else if(m_pTransform->GetVelocity().x < 0)
+				{
+					playerSM->Displace(Direction::left);
+				}
+				else
+				{
+					playerSM->StandingStill();
+				}
 			}
 
 		}

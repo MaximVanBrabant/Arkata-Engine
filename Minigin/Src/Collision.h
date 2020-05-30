@@ -2,6 +2,8 @@
 #include <SDL_Rect.h>
 namespace dae
 {
+	//for every object that has a rigidbody + collider component on it you want to just give it the RIGIDBODY_NONE_COLLISION
+
 	class GameObject;
 	enum class CollisionType
 	{
@@ -11,7 +13,15 @@ namespace dae
 		ENEMY_PROJECTILE_COLLISION,
 		PLAYER_TILE_COLLISION,
 		ENEMY_TILE_COLLISION,
-		PLAYER_NONE_COLLISION
+		PLAYER_NONE_COLLISION,
+		RIGID_NONE_COLLISION,
+		ITEM_TILE_COLLISION,
+		AI_FLOOR_TILE_COLLISION,
+		AI_PLATFORM_TILE_COLLISION,
+		AI_FLOOR_NONE_COLLISION,
+		RIGID_TILE_COLLISION,
+		RIGID_HORIZONTAL_SOLID_TILE_COLLISION,
+		RIGID_VERTICAL_SOLID_TILE_COLLISION
 	};
 
 	struct CollisionInfo

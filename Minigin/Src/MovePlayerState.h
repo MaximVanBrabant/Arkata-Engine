@@ -14,7 +14,7 @@ namespace dae
 		void ShootBell(Direction direction) override;
 		void Displace(Direction direction) override;
 	private:
-		const float m_MovingSpeed = 200.0f;
+		const float m_MovingSpeed = 200.f;
 	};
 }
 

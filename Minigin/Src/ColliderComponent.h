@@ -21,6 +21,9 @@ namespace dae
 		void SetIsColliding(bool isColliding) { m_IsColliding = isColliding; }
 		bool GetIsColliding() const { return m_IsColliding; }
 
+		void SetEnabled(bool enable) { m_Enabled = enable; }
+		bool GetEnabled() const { return m_Enabled; }
+		void SetOffset(int x, int y) { m_OffsetX = x; m_OffsetY = y; }
 	private:
 		//SDL_Rect m_CollisionBox;
 		Transform* m_pTransform = nullptr;
@@ -28,7 +31,12 @@ namespace dae
 		SDL_Rect m_Collider;
 		float m_CenterX;
 		float m_CenterY;
+		int m_OffsetX;
+		int m_OffsetY;
+
 		bool m_IsGrounded = false;
 		bool m_IsColliding = false;
+
+		bool m_Enabled = true;
 	};
 }

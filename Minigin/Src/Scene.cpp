@@ -34,7 +34,8 @@ void Scene::Add(const std::shared_ptr<GameObject>& object)
 void Scene::Update(float deltaTime)
 {
 
-	//TODO: check first if the object is active or not
+	//MAKE USE OF THREADS HERE !!!!!
+
 	for (int i{}; i < m_Objects.size(); ++i)
 	{
 		auto& object = m_Objects[i];

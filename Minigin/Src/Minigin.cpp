@@ -109,9 +109,11 @@ void dae::Minigin::Run()
 			m_DeltaTime = (SDL_GetTicks() - m_TicksPrevFrame) / 1000.f;
 			m_TicksPrevFrame = SDL_GetTicks();
 
-			//clamp
+			//clamp -> slow computers -> minimum 20 fps -> no idea why i do this
 			m_DeltaTime = (m_DeltaTime > 0.05f) ? 0.05f : m_DeltaTime;
+			//FPS COUNTER
 			//std::cout << 1/m_DeltaTime << std::endl;
+
 			//if (accumulatedTime > cooldownTime)
 			//{
 			//	if (m_DeltaTime != 0)
