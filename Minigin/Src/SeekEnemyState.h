@@ -17,5 +17,9 @@ namespace dae
 		float m_CurrentMovementSpeed;
 		const float m_MaxMovementSpeed = 75.f;
 		glm::vec2 m_Displacement;
+
+
+		const float m_CooldownTime = 2.f;
+		float m_CurrentCooldown = 0.0f;
 	};
 }

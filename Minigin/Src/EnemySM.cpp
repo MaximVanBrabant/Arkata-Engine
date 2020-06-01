@@ -8,10 +8,11 @@
 #include "ColliderComponent.h"
 #include "Renderer.h"
 
-dae::EnemySM::EnemySM(const std::shared_ptr<GameObject>& pTarget)
+dae::EnemySM::EnemySM(const std::shared_ptr<GameObject>& pTarget, EnemyType enemyType)
 	:m_Seek{ std::make_shared<SeekEnemyState>(this) }, m_Jump{ std::make_shared<JumpEnemyState>(this) }, m_Attack{std::make_shared<AttackEnemyState>(this)},
 	m_pTarget{ pTarget }, m_pLeftFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pLeftPlatformCollider{ new ColliderComponent("AI_PLATFORM") }
-	,m_pRightFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pRightPlatformCollider{new ColliderComponent("AI_PLATFORM")}
+	, m_pRightFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pRightPlatformCollider{ new ColliderComponent("AI_PLATFORM") }, m_EnemyType{ enemyType }
+	, m_JumpHeight{}
 {
 }
 
@@ -40,6 +41,7 @@ void dae::EnemySM::Initialize()
 	m_pLeftPlatformCollider->m_Owner = this->m_Owner;
 	m_pRightFloorCollider->m_Owner = this->m_Owner;
 	m_pRightPlatformCollider->m_Owner = this->m_Owner;
+
 	m_pLeftFloorCollider->Initialize();
 	m_pLeftPlatformCollider->Initialize();
 	m_pRightFloorCollider->Initialize();

@@ -25,7 +25,7 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_ENEMY_COLLISION)
 	{
-		collisionInfo.firstGameObject->Destroy();
+		//collisionInfo.firstGameObject->Destroy();
 	}
 	//else if (collisionInfo.collisionType == CollisionType::PLAYER_TILE_COLLISION || collisionInfo.collisionType == CollisionType::ENEMY_TILE_COLLISION || collisionInfo.collisionType == CollisionType::ITEM_TILE_COLLISION)
 	else if(collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION) //->>> debatable if this is the right thing
@@ -118,6 +118,48 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 
 
 	}
+	else if (collisionInfo.collisionType == CollisionType::ENEMY_ENEMY_COLLISION)
+	{
+		ColliderComponent* playerCollider{ collisionInfo.firstGameObject->GetComponent<ColliderComponent>() };
+		ColliderComponent* tileCollider{ collisionInfo.secondGameObject->GetComponent<ColliderComponent>() };
+		Transform* playerTransform{ collisionInfo.firstGameObject->GetComponent<Transform>() };
+		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) == abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
+		{
+			return;
+		}
+
+		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) < abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
+		{
+			if (playerCollider->GetCenterY() < tileCollider->GetCenterY() && !playerCollider->GetIsGrounded() && playerTransform->GetVelocity().y > 0.0f)
+			{
+				playerTransform->SetPosition(playerTransform->GetPosition().x, static_cast<float>(tileCollider->GetCollider().y - tileCollider->GetCollider().h));
+				playerTransform->SetVelocity(playerTransform->GetVelocity().x, 0);
+				//playerRigid->EnableGravity(false);
+				//playerCollider->SetIsGrounded(true);
+			}
+		}
+		else
+		{
+			if (playerCollider->GetCenterX() < tileCollider->GetCenterX())
+			{
+				playerTransform->SetPosition(static_cast<float>(tileCollider->GetCollider().x - playerCollider->GetCollider().w), playerTransform->GetPosition().y);
+			}
+			if (playerCollider->GetCenterX() > tileCollider->GetCenterX())
+			{
+				playerTransform->SetPosition(static_cast<float>(tileCollider->GetCollider().x + tileCollider->GetCollider().w), playerTransform->GetPosition().y);
+
+			}
+		}
+
+		//move them away from eachother
+		if (collisionInfo.firstGameObject->HasComponent<EnemySM>())
+		{
+			auto enemySM = collisionInfo.firstGameObject->GetComponent<EnemySM>();
+			enemySM->SetInverseMovement(true);
+		}
+
+
+	}
 	else if (collisionInfo.collisionType == CollisionType::RIGID_NONE_COLLISION)
 	{
 		//you are in the air
@@ -167,6 +209,18 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 				//here choose which jumpheight to use
 				enemySM->SetJumpHeight(enemySM->GetVerticalJumpHeight());
 				enemySM->JumpIntoAir();
+			}
+		}
+	}
+	else if (collisionInfo.collisionType == CollisionType::AI_FLOOR_VERTICAL_SOLID_TILE_COLLISION)
+	{
+		if (collisionInfo.firstGameObject->HasComponent<EnemySM>())
+		{
+			auto enemySM = collisionInfo.firstGameObject->GetComponent<EnemySM>();
+			auto enemyCollider = collisionInfo.firstGameObject->GetComponent<ColliderComponent>();
+			if (enemyCollider->GetIsGrounded())
+			{
+				enemySM->SetInverseMovement(true);
 			}
 		}
 	}
@@ -240,6 +294,14 @@ void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& 
 									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_PLATFORM_TILE_COLLISION, enemy, otherGameObject });
 								else
 									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_PLATFORM_TILE_COLLISION, otherGameObject, enemy });
+								continue;
+							}
+							else if (Collision::CheckCollisionTypeWithTags(AITag, secondTag, "AI_FLOOR", "VERTICAL_SOLID_TILE"))
+							{
+								if (AITag.compare("AI_FLOOR") == 0)
+									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_VERTICAL_SOLID_TILE_COLLISION, enemy, otherGameObject });
+								else
+									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_VERTICAL_SOLID_TILE_COLLISION, otherGameObject, enemy });
 								continue;
 							}
 						}
@@ -317,6 +379,10 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_ENEMY_COLLISION, secondGameObject, firstGameObject));
 							continue;
 
+						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "ENEMY", "ENEMY"))
+						{
+							ApplyCollisionEffects(CollisionInfo(CollisionType::ENEMY_ENEMY_COLLISION, firstGameObject, secondGameObject));
 						}
 						if (firstTag.compare("TILE") == 0 || secondTag.compare("TILE") == 0)
 						{
