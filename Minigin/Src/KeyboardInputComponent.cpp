@@ -54,18 +54,24 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 			if (keyCode.compare(m_LeftInput) == 0)
 			{
 				m_LeftPress = true;
+				playerSM->SetDirection(Direction::left);
 				playerSM->Displace(Direction::left);
 			}
 			else if (keyCode.compare(m_RightInput) == 0)
 			{
 				m_RightPress = true;
+				playerSM->SetDirection(Direction::right);
+
 				playerSM->Displace(Direction::right);
 			}
 
 
 			if (keyCode.compare(m_ShootInput) == 0)
 			{
-				playerSM->ShootBell(Direction::left);
+				if (playerSM->ReadyToShoot())
+				{
+					playerSM->ShootBell();
+				}
 			}
 
 			if (keyCode.compare(m_JumpInput) == 0)

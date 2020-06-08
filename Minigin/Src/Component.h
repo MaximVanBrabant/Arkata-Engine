@@ -12,6 +12,7 @@ namespace dae
 		virtual void Update(float deltaTime) { UNREFERENCED_PARAMETER(deltaTime); }
 		virtual void Render() const {}
 		GameObject* m_Owner = nullptr;
+		bool m_IsActive = true;
 	private:
 	};
 }

@@ -11,7 +11,7 @@ namespace dae
 		void Exit() override {}
 		void JumpIntoAir() override;
 		void StandingStill() override;
-		void ShootBell(Direction direction) override;
+		void ShootBell() override;
 		void Displace(Direction direction) override;
 	private:
 		const float m_MovingSpeed = 200.f;

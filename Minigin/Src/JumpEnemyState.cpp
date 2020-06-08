@@ -32,6 +32,11 @@ void dae::JumpEnemyState::Update(float deltaTime)
 
 }
 
+void dae::JumpEnemyState::TrapInBell()
+{	
+	m_pEnemySM->SwitchState(m_pEnemySM->GetBubbleState());
+}
+
 void dae::JumpEnemyState::JumpIntoAir()
 {
 	std::cout << "you already are jumping " << std::endl;

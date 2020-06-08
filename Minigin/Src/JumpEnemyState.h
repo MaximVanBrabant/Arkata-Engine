@@ -8,7 +8,7 @@ namespace dae
 		JumpEnemyState(EnemySM* enemySM) : EnemyState(enemySM){}
 		void Entry() override;
 		void Update(float deltaTime) override;
-		//here i can give something as a parameter
+		void TrapInBell() override;
 		void JumpIntoAir() override;
 		void Exit() override {}
 	private:

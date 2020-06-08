@@ -5,6 +5,7 @@
 #include "SeekEnemyState.h"
 #include "JumpEnemyState.h"
 #include "AttackEnemyState.h"
+#include "BubbleEnemyState.h"
 #include "ColliderComponent.h"
 #include "Renderer.h"
 
@@ -12,7 +13,7 @@ dae::EnemySM::EnemySM(const std::shared_ptr<GameObject>& pTarget, EnemyType enem
 	:m_Seek{ std::make_shared<SeekEnemyState>(this) }, m_Jump{ std::make_shared<JumpEnemyState>(this) }, m_Attack{std::make_shared<AttackEnemyState>(this)},
 	m_pTarget{ pTarget }, m_pLeftFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pLeftPlatformCollider{ new ColliderComponent("AI_PLATFORM") }
 	, m_pRightFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pRightPlatformCollider{ new ColliderComponent("AI_PLATFORM") }, m_EnemyType{ enemyType }
-	, m_JumpHeight{}
+	, m_JumpHeight{}, m_Bubble{std::make_shared<BubbleEnemyState>(this)}
 {
 }
 
@@ -57,6 +58,7 @@ void dae::EnemySM::Initialize()
 	m_Seek->Initialize();
 	m_Jump->Initialize();
 	m_Attack->Initialize();
+	m_Bubble->Initialize();
 	SwitchState(m_Seek);
 }
 
@@ -72,6 +74,11 @@ void dae::EnemySM::Update(float deltaTime)
 void dae::EnemySM::JumpIntoAir()
 {
 	m_CurrentEnemyState->JumpIntoAir();
+}
+
+void dae::EnemySM::TrapInBell()
+{
+	m_CurrentEnemyState->TrapInBell();
 }
 
 void dae::EnemySM::SetLeftFloorCollider(bool enable)

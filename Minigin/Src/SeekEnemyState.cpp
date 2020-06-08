@@ -158,6 +158,11 @@ void dae::SeekEnemyState::Update(float deltaTime)
 
 }
 
+void dae::SeekEnemyState::TrapInBell()
+{
+	m_pEnemySM->SwitchState(m_pEnemySM->GetBubbleState());
+}
+
 void dae::SeekEnemyState::JumpIntoAir()
 {
 	m_pEnemySM->SetLeftPlatformCollider(false);

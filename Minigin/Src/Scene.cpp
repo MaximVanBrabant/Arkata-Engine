@@ -50,11 +50,36 @@ void Scene::Update(float deltaTime)
 		}
 	}
 
+	//first chck if one of the inactive objects is the last one
+	// this is really important because otherwise we would push the last element somewhere randomly in the vector and if that 
+	// object needed to be deleted we won't be able because we still have the index of its previous position (the last position in the vector)
+	bool lastItem = false;
+	do
+	{
+		for (int index : m_NonActiveIndices)
+		{
+			if (index == static_cast<int>(m_Objects.size() - 1))
+			{
+				lastItem = true;
+				m_Objects.pop_back();
+				break;
+			}
+			else
+			{
+				lastItem = false;
+			}
+		}
+	} while (lastItem);
+
+
 	//delete inactive objects
 	for (int index : m_NonActiveIndices)
 	{
-		m_Objects[index] = m_Objects[m_Objects.size() - 1];
-		m_Objects.pop_back();
+		if (index < m_Objects.size() - 1)
+		{
+			m_Objects[index] = m_Objects[m_Objects.size() - 1];
+			m_Objects.pop_back();
+		}
 	}
 
 	CollisionManager::GetInstance().CollisionUpdate();

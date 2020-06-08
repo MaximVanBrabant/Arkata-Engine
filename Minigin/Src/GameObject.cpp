@@ -34,7 +34,8 @@ void dae::GameObject::Update(float deltaTime)
 {
 	for (const std::shared_ptr<Component>& component : m_pComponents)
 	{
-		component->Update(deltaTime);
+		if(component->m_IsActive)
+			component->Update(deltaTime);
 	}
 }
 

@@ -8,6 +8,7 @@ namespace dae
 		SeekEnemyState(EnemySM* enemySM) : EnemyState(enemySM), m_CurrentMovementSpeed{} {}
 		void Entry() override;
 		void Update(float deltaTime) override;
+		void TrapInBell() override;
 		void JumpIntoAir() override;
 		void Exit() override {}
 		const glm::vec2& GetDisplacement() const { return m_Displacement; }

@@ -15,6 +15,7 @@ namespace dae
 		virtual void Entry() = 0;
 		virtual void Update(float deltaTime) = 0;
 		virtual void JumpIntoAir() = 0;
+		virtual void TrapInBell() = 0;
 		virtual void Exit() = 0;
 	protected:
 		EnemySM* m_pEnemySM;

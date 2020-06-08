@@ -24,10 +24,12 @@ namespace dae
 
 		void Update(float deltaTime) override;
 		void JumpIntoAir();
+		void TrapInBell();
 
 		const std::shared_ptr<EnemyState>& GetSeekState() const { return m_Seek; }
 		const std::shared_ptr<EnemyState>& GetJumpState() const { return m_Jump; }
 		const std::shared_ptr<EnemyState>& GetAttackState() const { return m_Attack; }
+		const std::shared_ptr<EnemyState>& GetBubbleState() const { return m_Bubble; }
 
 		const std::weak_ptr<GameObject>& GetTarget() const { return m_pTarget; }
 		float GetToCloseMeleeDistance () const { return m_ToCloseMeleeDistance; }
@@ -61,6 +63,7 @@ namespace dae
 		std::shared_ptr<EnemyState> m_Seek;
 		std::shared_ptr<EnemyState> m_Jump;
 		std::shared_ptr<EnemyState> m_Attack;
+		std::shared_ptr<EnemyState> m_Bubble;
 
 		std::shared_ptr<EnemyState> m_CurrentEnemyState;
 

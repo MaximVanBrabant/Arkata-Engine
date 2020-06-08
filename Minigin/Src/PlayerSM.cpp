@@ -35,6 +35,15 @@ void dae::PlayerSM::Initialize()
 void dae::PlayerSM::Update(float deltaTime)
 {
 	m_CurrentPlayerState->Update(deltaTime);
+	
+	if(!m_CanShoot && m_CurrentShotCooldown < m_ShootCooldown)
+		m_CurrentShotCooldown += deltaTime;
+	else if (m_CurrentShotCooldown > m_ShootCooldown && !m_CanShoot)
+	{
+		m_CanShoot = true;
+		m_CurrentShotCooldown = 0.0f;
+	}
+
 }
 
 void dae::PlayerSM::JumpIntoAir()
@@ -45,9 +54,10 @@ void dae::PlayerSM::StandingStill()
 {
 	m_CurrentPlayerState->StandingStill();
 }
-void dae::PlayerSM::ShootBell(Direction direction)
+void dae::PlayerSM::ShootBell()
 {
-	m_CurrentPlayerState->ShootBell(direction);
+	m_CanShoot = false;
+	m_CurrentPlayerState->ShootBell();
 }
 void dae::PlayerSM::Displace(Direction direction)
 {

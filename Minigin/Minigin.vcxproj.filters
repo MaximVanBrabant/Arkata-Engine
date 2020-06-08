@@ -171,6 +171,9 @@
     <ClInclude Include="Src\AttackEnemyState.h">
       <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
     </ClInclude>
+    <ClInclude Include="Src\BubbleEnemyState.h">
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\FPSComponent.cpp">
@@ -261,6 +264,9 @@
       <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
     </ClCompile>
     <ClCompile Include="Src\AttackEnemyState.cpp">
+      <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\BubbleEnemyState.cpp">
       <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
     </ClCompile>
   </ItemGroup>

@@ -58,10 +58,9 @@ void dae::JumpPlayerState::StandingStill()
 	std::cout << "im in the air without input" << std::endl;
 }
 
-void dae::JumpPlayerState::ShootBell(Direction direction)
+void dae::JumpPlayerState::ShootBell()
 {
 	std::cout << "we cant shoot while in the air" << std::endl;
-	UNREFERENCED_PARAMETER(direction);
 }
 
 void dae::JumpPlayerState::Displace(Direction direction)

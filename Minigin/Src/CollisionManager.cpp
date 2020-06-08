@@ -27,8 +27,22 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 	{
 		//collisionInfo.firstGameObject->Destroy();
 	}
-	//else if (collisionInfo.collisionType == CollisionType::PLAYER_TILE_COLLISION || collisionInfo.collisionType == CollisionType::ENEMY_TILE_COLLISION || collisionInfo.collisionType == CollisionType::ITEM_TILE_COLLISION)
-	else if(collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION) //->>> debatable if this is the right thing
+	else if (collisionInfo.collisionType == CollisionType::PLAYER_PROJECTILE_COLLISION)
+	{
+		collisionInfo.firstGameObject->Destroy();
+		collisionInfo.secondGameObject->Destroy();
+	}
+	else if (collisionInfo.collisionType == CollisionType::ENEMY_BUBBLE_COLLISION)
+	{
+		auto enemySM = collisionInfo.firstGameObject->GetComponent<EnemySM>();
+		enemySM->TrapInBell();
+		collisionInfo.secondGameObject->Destroy();
+	}
+	else if (collisionInfo.collisionType == CollisionType::PLAYER_BUBBLE_ENEMY_COLLISION)
+	{
+		collisionInfo.secondGameObject->Destroy();
+	}
+	else if(collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION)
 	{
 		//get colliders
 		//first check if i have those components on the gameobjects
@@ -380,9 +394,37 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 							continue;
 
 						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "PLAYER", "PROJECTILE"))
+						{
+							if (firstTag.compare("PLAYER") == 0)
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_PROJECTILE_COLLISION, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_PROJECTILE_COLLISION, secondGameObject, firstGameObject));
+							continue;
+
+						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "ENEMY", "BUBBLE"))
+						{
+							if (firstTag.compare("ENEMY") == 0)
+								ApplyCollisionEffects(CollisionInfo(CollisionType::ENEMY_BUBBLE_COLLISION, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects(CollisionInfo(CollisionType::ENEMY_BUBBLE_COLLISION, secondGameObject, firstGameObject));
+							continue;
+
+						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "PLAYER", "BUBBLE_ENEMY"))
+						{
+							if (firstTag.compare("PLAYER") == 0)
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_BUBBLE_ENEMY_COLLISION, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_BUBBLE_ENEMY_COLLISION, secondGameObject, firstGameObject));
+							continue;
+
+						}
 						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "ENEMY", "ENEMY"))
 						{
 							ApplyCollisionEffects(CollisionInfo(CollisionType::ENEMY_ENEMY_COLLISION, firstGameObject, secondGameObject));
+							continue;
 						}
 						if (firstTag.compare("TILE") == 0 || secondTag.compare("TILE") == 0)
 						{

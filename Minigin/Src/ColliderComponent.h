@@ -24,6 +24,8 @@ namespace dae
 		void SetEnabled(bool enable) { m_Enabled = enable; }
 		bool GetEnabled() const { return m_Enabled; }
 		void SetOffset(int x, int y) { m_OffsetX = x; m_OffsetY = y; }
+
+		void ChangeTag(const std::string& tag) { m_Tag = tag; }
 	private:
 		//SDL_Rect m_CollisionBox;
 		Transform* m_pTransform = nullptr;

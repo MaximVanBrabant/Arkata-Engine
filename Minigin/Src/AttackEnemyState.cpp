@@ -23,7 +23,7 @@ void dae::AttackEnemyState::Entry()
 
 		std::shared_ptr<GameObject> bullet = std::make_shared<GameObject>("bullet", false);
 		bullet->AddComponent<Transform>(static_cast<int>(m_pTransform->GetPosition().x + offset),static_cast<int>( m_pTransform->GetPosition().y - offset), static_cast<int>(displacement.x), static_cast<int>(displacement.y), 16, 16, 1);
-		bullet->AddComponent<ColliderComponent>("ENEMY");
+		bullet->AddComponent<ColliderComponent>("PROJECTILE");
 		bullet->AddComponent<SpriteComponent>("bullet");
 		scene->Add(bullet);
 
@@ -58,6 +58,11 @@ void dae::AttackEnemyState::Update(float deltaTime)
 		}
 	}
 
+}
+
+void dae::AttackEnemyState::TrapInBell()
+{
+	m_pEnemySM->SwitchState(m_pEnemySM->GetBubbleState());
 }
 
 void dae::AttackEnemyState::Exit()
