@@ -15,9 +15,6 @@ dae::TileComponent::TileComponent(int srcRectX, int srcRectY, int x, int y, int 
 	m_DestRect.y = y;
 	m_DestRect.w = tileSize * tileScale;
 	m_DestRect.h = tileSize * tileScale;
-
-	//m_Position.x = static_cast<float>(x);
-	//m_Position.y = static_cast<float>(y);
 }
 
 

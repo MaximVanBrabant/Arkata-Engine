@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "SpriteComponent.h"
+#include "SelfDestructComponent.h"
 
 void dae::AttackEnemyState::Entry()
 {
@@ -22,9 +23,10 @@ void dae::AttackEnemyState::Entry()
 		auto& scene = SceneManager::GetInstance().GetActiveScene();
 
 		std::shared_ptr<GameObject> bullet = std::make_shared<GameObject>("bullet", false);
-		bullet->AddComponent<Transform>(static_cast<int>(m_pTransform->GetPosition().x + offset),static_cast<int>( m_pTransform->GetPosition().y - offset), static_cast<int>(displacement.x), static_cast<int>(displacement.y), 16, 16, 1);
+		bullet->AddComponent<Transform>(static_cast<int>(m_pTransform->GetPosition().x + offset),static_cast<int>( m_pTransform->GetPosition().y), static_cast<int>(displacement.x), static_cast<int>(displacement.y), 16, 16, 1);
 		bullet->AddComponent<ColliderComponent>("PROJECTILE");
 		bullet->AddComponent<SpriteComponent>("bullet");
+		bullet->AddComponent<SelfDestructComponent>(5.f);
 		scene->Add(bullet);
 
 

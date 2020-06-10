@@ -6,7 +6,7 @@
 
 void dae::BubbleEnemyState::Entry()
 {
-	m_pTransform->m_Owner->GetComponent<SpriteComponent>()->AddTexture("bubble");
+	m_TextureBubbleIndex = m_pTransform->m_Owner->GetComponent<SpriteComponent>()->AddTexture("bubble");
 	m_pTransform->m_Owner->GetComponent<RigidBodyComponent>()->m_IsActive = false;
 	m_pTransform->m_Owner->GetComponent<ColliderComponent>()->ChangeTag("BUBBLE_ENEMY");
 	m_pTransform->SetVelocity(0, -100.f);
@@ -14,6 +14,20 @@ void dae::BubbleEnemyState::Entry()
 
 void dae::BubbleEnemyState::Update(float deltaTime)
 {
-	UNREFERENCED_PARAMETER(deltaTime);
-	std::cout << "im in bubble state" << std::endl;
+
+	if (m_CurrentDuration < m_TrapDuration)
+	{
+		m_CurrentDuration += deltaTime;
+
+	}
+	else
+	{
+		m_CurrentDuration = 0.0f;
+		m_pTransform->m_Owner->GetComponent<RigidBodyComponent>()->m_IsActive = true;
+		m_pTransform->m_Owner->GetComponent<SpriteComponent>()->RemoveTexture(m_TextureBubbleIndex);
+		m_pTransform->m_Owner->GetComponent<ColliderComponent>()->ChangeTag("ENEMY");
+		m_pEnemySM->SwitchState(m_pEnemySM->GetSeekState());
+	}
+
+
 }

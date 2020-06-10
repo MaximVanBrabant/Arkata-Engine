@@ -50,17 +50,17 @@ void dae::JumpPlayerState::Update(float deltaTime)
 
 void dae::JumpPlayerState::JumpIntoAir()
 {
-	std::cout << "we are already jumping" << std::endl;
+	/*std::cout << "we are already jumping" << std::endl;*/
 }
 
 void dae::JumpPlayerState::StandingStill()
 {
-	std::cout << "im in the air without input" << std::endl;
+	/*std::cout << "im in the air without input" << std::endl;*/
 }
 
 void dae::JumpPlayerState::ShootBell()
 {
-	std::cout << "we cant shoot while in the air" << std::endl;
+	/*std::cout << "we cant shoot while in the air" << std::endl;*/
 }
 
 void dae::JumpPlayerState::Displace(Direction direction)

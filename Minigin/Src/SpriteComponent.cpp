@@ -19,7 +19,6 @@ dae::SpriteComponent::SpriteComponent(const std::string& textureId, const std::s
 {
 		Animation singleAnimation = Animation(0, numFrames, animationSpeed);
 		m_Animations.emplace(animationId, singleAnimation);
-		m_AnimationIndex = 0;
 		m_CurAnimationName = animationId;
 
 	Play(m_CurAnimationName);
@@ -80,6 +79,12 @@ int SpriteComponent::AddTexture(const std::string& textureId)
 	m_pTextures.push_back(ResourceManager::GetInstance().GetTexture(textureId));
 
 	return id;
+}
+
+void dae::SpriteComponent::RemoveTexture(int textureIndex)
+{
+	m_pTextures[textureIndex] = m_pTextures[m_pTextures.size() - 1];
+	m_pTextures.pop_back();
 }
 
 std::shared_ptr<Texture2D> SpriteComponent::GetTexture(int id) const

@@ -13,7 +13,7 @@ dae::EnemySM::EnemySM(const std::shared_ptr<GameObject>& pTarget, EnemyType enem
 	:m_Seek{ std::make_shared<SeekEnemyState>(this) }, m_Jump{ std::make_shared<JumpEnemyState>(this) }, m_Attack{std::make_shared<AttackEnemyState>(this)},
 	m_pTarget{ pTarget }, m_pLeftFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pLeftPlatformCollider{ new ColliderComponent("AI_PLATFORM") }
 	, m_pRightFloorCollider{ new ColliderComponent("AI_FLOOR") }, m_pRightPlatformCollider{ new ColliderComponent("AI_PLATFORM") }, m_EnemyType{ enemyType }
-	, m_JumpHeight{}, m_Bubble{std::make_shared<BubbleEnemyState>(this)}
+	, m_JumpHeight{}, m_Bubble{std::make_shared<BubbleEnemyState>(this)}, m_pLeftWallCollider{new ColliderComponent("AI_WALL")}, m_pRightWallCollider{new ColliderComponent("AI_WALL")}
 {
 }
 
@@ -23,6 +23,8 @@ dae::EnemySM::~EnemySM()
 	delete m_pLeftPlatformCollider;
 	delete m_pRightFloorCollider;
 	delete m_pRightPlatformCollider;
+	delete m_pLeftWallCollider;
+	delete m_pRightWallCollider;
 }
 
 void dae::EnemySM::SwitchState(const std::shared_ptr<EnemyState>& newState)
@@ -42,17 +44,24 @@ void dae::EnemySM::Initialize()
 	m_pLeftPlatformCollider->m_Owner = this->m_Owner;
 	m_pRightFloorCollider->m_Owner = this->m_Owner;
 	m_pRightPlatformCollider->m_Owner = this->m_Owner;
+	m_pLeftWallCollider->m_Owner = this->m_Owner;
+	m_pRightWallCollider->m_Owner = this->m_Owner;
 
 	m_pLeftFloorCollider->Initialize();
 	m_pLeftPlatformCollider->Initialize();
 	m_pRightFloorCollider->Initialize();
 	m_pRightPlatformCollider->Initialize();
+	m_pRightWallCollider->Initialize();
+	m_pLeftWallCollider->Initialize();
 
 	m_pRightFloorCollider->SetOffset(m_Owner->GetComponent<Transform>()->GetWidth(), m_Owner->GetComponent<Transform>()->GetHeight());
 	m_pLeftFloorCollider->SetOffset(-m_Owner->GetComponent<Transform>()->GetWidth(),m_Owner->GetComponent<Transform>()->GetHeight());
 
 	m_pLeftPlatformCollider->SetOffset(-30, -80);
 	m_pRightPlatformCollider->SetOffset(30, -80);
+
+	m_pRightWallCollider->SetOffset(m_Owner->GetComponent<Transform>()->GetWidth(), 0);
+	m_pLeftWallCollider->SetOffset(-m_Owner->GetComponent<Transform>()->GetWidth(), 0);
 
 
 	m_Seek->Initialize();
@@ -68,6 +77,8 @@ void dae::EnemySM::Update(float deltaTime)
 	m_pLeftPlatformCollider->Update(deltaTime);
 	m_pRightFloorCollider->Update(deltaTime);
 	m_pRightPlatformCollider->Update(deltaTime);
+	m_pRightWallCollider->Update(deltaTime);
+	m_pLeftWallCollider->Update(deltaTime);
 	m_CurrentEnemyState->Update(deltaTime);
 }
 
@@ -105,7 +116,10 @@ void dae::EnemySM::Render() const
 	if (m_pRightPlatformCollider->GetEnabled())
 	{
 		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightPlatformCollider->GetCollider());
-
 	}
 
+	if(m_pRightWallCollider->GetEnabled())
+		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightWallCollider->GetCollider());
+	if(m_pLeftWallCollider->GetEnabled())
+		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftWallCollider->GetCollider());
 }

@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "RigidBodyComponent.h"
+#include "SpriteComponent.h"
 #include "EnemySM.h"
 #include "JumpEnemyState.h"
 #include <thread>
@@ -18,7 +19,7 @@ void dae::CollisionManager::CollisionUpdate()
 
 void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 {
-	
+
 	if (collisionInfo.collisionType == CollisionType::NO_COLLISION)
 	{
 		return;
@@ -29,8 +30,15 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_PROJECTILE_COLLISION)
 	{
-		collisionInfo.firstGameObject->Destroy();
+		//collisionInfo.firstGameObject->Destroy();
 		collisionInfo.secondGameObject->Destroy();
+	}
+	else if (collisionInfo.collisionType == CollisionType::PLAYER_ITEM_COLLISION)
+	{
+		//add score
+		if(collisionInfo.secondGameObject->GetComponent<ColliderComponent>()->GetIsGrounded())
+			collisionInfo.secondGameObject->Destroy();
+
 	}
 	else if (collisionInfo.collisionType == CollisionType::ENEMY_BUBBLE_COLLISION)
 	{
@@ -40,16 +48,39 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_BUBBLE_ENEMY_COLLISION)
 	{
+
+		//make food
+		auto enemySM = collisionInfo.secondGameObject->GetComponent<EnemySM>();
+		auto enemyTransform = collisionInfo.secondGameObject->GetComponent<Transform>();
+
+		std::shared_ptr<GameObject> foodItem = std::make_shared<GameObject>("food", false);
+		foodItem->AddComponent<Transform>(static_cast<int>(enemyTransform->GetPosition().x), static_cast<int>(enemyTransform->GetPosition().y), 0, 0, 32, 32, 1);
+		foodItem->AddComponent<ColliderComponent>("ITEM");
+		foodItem->AddComponent<RigidBodyComponent>();
+		if (enemySM->GetEnemyType() == EnemyType::Charge)
+		{
+			foodItem->AddComponent<SpriteComponent>("melon");
+		}
+		else if (enemySM->GetEnemyType() == EnemyType::Throw)
+		{
+			foodItem->AddComponent<SpriteComponent>("fries");
+		}
+
 		collisionInfo.secondGameObject->Destroy();
+
+
+		SceneManager::GetInstance().GetActiveScene()->Add(foodItem);
+
+
 	}
-	else if(collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION)
+	else if (collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION)
 	{
 		//get colliders
 		//first check if i have those components on the gameobjects
 		ColliderComponent* playerCollider{ collisionInfo.firstGameObject->GetComponent<ColliderComponent>() };
 		ColliderComponent* tileCollider{ collisionInfo.secondGameObject->GetComponent<ColliderComponent>() };
 		Transform* playerTransform{ collisionInfo.firstGameObject->GetComponent<Transform>() };
-		RigidBodyComponent* playerRigid{collisionInfo.firstGameObject->GetComponent<RigidBodyComponent>()};
+		RigidBodyComponent* playerRigid{ collisionInfo.firstGameObject->GetComponent<RigidBodyComponent>() };
 
 		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) == abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
 		{
@@ -78,7 +109,6 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 				if (playerCollider->GetCenterX() > tileCollider->GetCenterX())
 				{
 					playerTransform->SetPosition(static_cast<float>(tileCollider->GetCollider().x + tileCollider->GetCollider().w), playerTransform->GetPosition().y);
-
 				}
 			}
 
@@ -137,10 +167,10 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 		ColliderComponent* playerCollider{ collisionInfo.firstGameObject->GetComponent<ColliderComponent>() };
 		ColliderComponent* tileCollider{ collisionInfo.secondGameObject->GetComponent<ColliderComponent>() };
 		Transform* playerTransform{ collisionInfo.firstGameObject->GetComponent<Transform>() };
-		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) == abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
-		{
-			return;
-		}
+		//if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) == abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
+		//{
+		//	return;
+		//}
 
 		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) < abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
 		{
@@ -148,8 +178,6 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 			{
 				playerTransform->SetPosition(playerTransform->GetPosition().x, static_cast<float>(tileCollider->GetCollider().y - tileCollider->GetCollider().h));
 				playerTransform->SetVelocity(playerTransform->GetVelocity().x, 0);
-				//playerRigid->EnableGravity(false);
-				//playerCollider->SetIsGrounded(true);
 			}
 		}
 		else
@@ -164,15 +192,6 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 
 			}
 		}
-
-		//move them away from eachother
-		if (collisionInfo.firstGameObject->HasComponent<EnemySM>())
-		{
-			auto enemySM = collisionInfo.firstGameObject->GetComponent<EnemySM>();
-			enemySM->SetInverseMovement(true);
-		}
-
-
 	}
 	else if (collisionInfo.collisionType == CollisionType::RIGID_NONE_COLLISION)
 	{
@@ -206,7 +225,7 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 			if (enemyCollider->GetIsGrounded())
 			{
 				//here choose which jumpheight to use
-			
+
 				enemySM->SetJumpHeight(enemySM->GetHorizontalJumpHeight());
 				enemySM->JumpIntoAir();
 			}
@@ -226,7 +245,7 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 			}
 		}
 	}
-	else if (collisionInfo.collisionType == CollisionType::AI_FLOOR_VERTICAL_SOLID_TILE_COLLISION)
+	else if (collisionInfo.collisionType == CollisionType::AI_WALL_VERTICAL_SOLID_TILE_COLLISION)
 	{
 		if (collisionInfo.firstGameObject->HasComponent<EnemySM>())
 		{
@@ -238,6 +257,12 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 			}
 		}
 	}
+	else if (collisionInfo.collisionType == CollisionType::AI_WALL_ENEMY_COLLISION)
+	{
+		auto enemySM = collisionInfo.firstGameObject->GetComponent<EnemySM>();
+		enemySM->SetInverseMovement(true);
+	}
+
 }
 
 void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& vIndicesOfEnemies)
@@ -261,6 +286,8 @@ void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& 
 			auto rightFloorCollider = enemySM->GetRightFloorCollider();
 			auto leftPlatformCollider = enemySM->GetLeftPlatformCollider();
 			auto rightPlatformCollider = enemySM->GetRightPlatformCollider();
+			auto leftWallCollider = enemySM->GetLeftWallCollider();
+			auto rightWallCollider = enemySM->GetRightWallCollider();
 
 
 			if (leftFloorCollider->GetEnabled())
@@ -277,6 +304,10 @@ void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& 
 			}
 			if (rightPlatformCollider->GetEnabled())
 				vAIColliders.push_back(rightPlatformCollider);
+			if(rightWallCollider->GetEnabled())
+				vAIColliders.push_back(rightWallCollider);
+			if(leftWallCollider->GetEnabled())
+				vAIColliders.push_back(leftWallCollider);
 
 			for (auto AICollider : vAIColliders)
 			{
@@ -286,7 +317,10 @@ void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& 
 				for (int i{ 0 }; i < gameObjects.size(); ++i)
 				{
 					auto& otherGameObject = gameObjects[i];
-					if (otherGameObject->HasComponent<ColliderComponent>() && otherGameObject->GetName().compare("tile") == 0)
+					if (otherGameObject == enemy)
+						continue;
+
+					if (otherGameObject->HasComponent<ColliderComponent>() && (otherGameObject->GetName().compare("tile") == 0 || otherGameObject->GetComponent<ColliderComponent>()->GetTag().compare("ENEMY") == 0))
 					{
 						ColliderComponent* otherCollider = otherGameObject->GetComponent<ColliderComponent>();
 						const std::string& secondTag = otherCollider->GetTag();
@@ -296,30 +330,21 @@ void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& 
 							AICollider->SetIsColliding(true);
 							if (Collision::CheckCollisionTypeWithTags(AITag, secondTag, "AI_FLOOR", "TILE"))
 							{
-								if (AITag.compare("AI_FLOOR") == 0)
-									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_TILE_COLLISION, enemy, otherGameObject });
-								else
-									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_TILE_COLLISION, otherGameObject, enemy });
-								continue;
+								ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_TILE_COLLISION, enemy, otherGameObject });
 							}
 							else if (Collision::CheckCollisionTypeWithTags(AITag, secondTag, "AI_PLATFORM", "TILE"))
 							{
-								if (AITag.compare("AI_PLATFORM") == 0)
-									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_PLATFORM_TILE_COLLISION, enemy, otherGameObject });
-								else
-									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_PLATFORM_TILE_COLLISION, otherGameObject, enemy });
-								continue;
+								ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_PLATFORM_TILE_COLLISION, enemy, otherGameObject });
 							}
-							else if (Collision::CheckCollisionTypeWithTags(AITag, secondTag, "AI_FLOOR", "VERTICAL_SOLID_TILE"))
+							else if (Collision::CheckCollisionTypeWithTags(AITag, secondTag, "AI_WALL", "VERTICAL_SOLID_TILE"))
 							{
-								if (AITag.compare("AI_FLOOR") == 0)
-									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_VERTICAL_SOLID_TILE_COLLISION, enemy, otherGameObject });
-								else
-									ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_FLOOR_VERTICAL_SOLID_TILE_COLLISION, otherGameObject, enemy });
-								continue;
+								ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_WALL_VERTICAL_SOLID_TILE_COLLISION, enemy, otherGameObject });
+							}
+							else if (Collision::CheckCollisionTypeWithTags(AITag, secondTag, "AI_WALL", "ENEMY"))
+							{
+								ApplyCollisionEffects(CollisionInfo{ CollisionType::AI_WALL_ENEMY_COLLISION, enemy, otherGameObject });
 							}
 						}
-
 					}
 				}
 
@@ -412,6 +437,15 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 							continue;
 
 						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "PLAYER", "ITEM"))
+						{
+							if (firstTag.compare("PLAYER") == 0)
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_ITEM_COLLISION, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_ITEM_COLLISION, secondGameObject, firstGameObject));
+							continue;
+
+						}
 						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "PLAYER", "BUBBLE_ENEMY"))
 						{
 							if (firstTag.compare("PLAYER") == 0)
@@ -424,6 +458,8 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "ENEMY", "ENEMY"))
 						{
 							ApplyCollisionEffects(CollisionInfo(CollisionType::ENEMY_ENEMY_COLLISION, firstGameObject, secondGameObject));
+							firstCollider->SetIsColliding(false);
+							secondCollider->SetIsColliding(false);
 							continue;
 						}
 						if (firstTag.compare("TILE") == 0 || secondTag.compare("TILE") == 0)

@@ -6,6 +6,8 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ColliderComponent.h"
+#include "SelfDestructComponent.h"
+#include "BellComponent.h"
 
 void dae::MovePlayerState::Entry()
 {
@@ -50,6 +52,8 @@ void dae::MovePlayerState::ShootBell()
 		bubble->AddComponent<Transform>(static_cast<int>(m_pTransform->GetPosition().x + offset),static_cast<int>( m_pTransform->GetPosition().y),static_cast<int>( shootingVelocity), 0, 32, 32, 1);
 		bubble->AddComponent<ColliderComponent>("BUBBLE");
 		bubble->AddComponent<SpriteComponent>("bubble");
+		bubble->AddComponent<SelfDestructComponent>(4.f);
+		bubble->AddComponent<BellComponent>();
 		SceneManager::GetInstance().GetActiveScene()->Add(bubble);
 
 

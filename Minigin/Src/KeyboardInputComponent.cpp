@@ -34,7 +34,6 @@ std::string dae::KeyboardInputComponent::GetSDLKeyStringCode(const std::string& 
 void dae::KeyboardInputComponent::Initialize()
 {
 	m_pTransform = m_Owner->GetComponent<Transform>();
-	m_pSprite = m_Owner->GetComponent<SpriteComponent>();
 }
 
 void dae::KeyboardInputComponent::Update(float deltaTime)
@@ -64,7 +63,6 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 
 				playerSM->Displace(Direction::right);
 			}
-
 
 			if (keyCode.compare(m_ShootInput) == 0)
 			{
@@ -107,10 +105,12 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 			{
 				if (m_pTransform->GetVelocity().x > 0)
 				{
+					playerSM->SetDirection(Direction::right);
 					playerSM->Displace(Direction::right);
 				}
 				else if(m_pTransform->GetVelocity().x < 0)
 				{
+					playerSM->SetDirection(Direction::left);
 					playerSM->Displace(Direction::left);
 				}
 				else

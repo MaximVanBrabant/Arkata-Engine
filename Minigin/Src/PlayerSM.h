@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-//#include "PlayerState.h"
 
 namespace dae
 {
@@ -41,6 +40,7 @@ namespace dae
 		bool m_CanShoot = true;
 		float m_ShootCooldown = 3.f;
 		float m_CurrentShotCooldown = 0.f;
+
 		Direction m_Direction = Direction::left;
 	};
 }

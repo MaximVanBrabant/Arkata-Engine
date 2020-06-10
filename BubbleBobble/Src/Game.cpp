@@ -29,23 +29,15 @@ void Game::InitializeLevel01()
 
 	//add textures
 	ResourceManager::GetInstance().AddTexture("dino", "./RESIZE/dino.png");
-	ResourceManager::GetInstance().AddTexture("apple", "/RESIZE/apple.png");
 	ResourceManager::GetInstance().AddTexture("clockworker", "/RESIZE/clockworker.png");
 	ResourceManager::GetInstance().AddTexture("tiles", "/RESIZE/tiles.png");
 	ResourceManager::GetInstance().AddTexture("bullet", "/RESIZE/bullets.png");
 	ResourceManager::GetInstance().AddTexture("bubble", "/RESIZE/bubbles.png");
+	ResourceManager::GetInstance().AddTexture("fries", "/RESIZE/fries.png");
+	ResourceManager::GetInstance().AddTexture("melon", "/RESIZE/melon.png");
 
 	std::shared_ptr<Level> pLevel = std::make_shared<Level>("tiles", 1,32, scene);
 	pLevel->LoadMap("./Data/RESIZE/level.map", 20, 15);
-
-	//gameobject
-	//!!!! think about move semantics / copyping
-	//std::shared_ptr<GameObject> apple = std::make_shared<GameObject>("apple", false);
-	//apple->AddComponent<Transform>(70, 20, 0, 0, 32, 32, 1);
-	//apple->AddComponent<ColliderComponent>("ITEM");
-	//apple->AddComponent<RigidBodyComponent>();
-	//apple->AddComponent<SpriteComponent>("apple");
-	//scene.Add(apple);
 
 	std::shared_ptr<GameObject> dino = std::make_shared<GameObject>("dino", false);
 	dino->AddComponent<Transform>(320, 240, 0, 0, 32, 32,1);
@@ -59,30 +51,30 @@ void Game::InitializeLevel01()
 	sprite.AddAnimation("shoot", 2, 1, 10);
 	scene.Add(dino);
 
-	std::shared_ptr<GameObject> clockworker = std::make_shared<GameObject>("clockworker", false);
-	clockworker->AddComponent<Transform>(80, 200, 0, 0, 32, 32, 1);
-	clockworker->AddComponent<SpriteComponent>("clockworker", "standard", 2,200, false);
-	clockworker->AddComponent<RigidBodyComponent>();
-	clockworker->AddComponent<ColliderComponent>("ENEMY");
-	clockworker->AddComponent<EnemySM>(dino, EnemyType::Throw);
-	scene.Add(clockworker);
+	//std::shared_ptr<GameObject> clockworker = std::make_shared<GameObject>("clockworker", false);
+	//clockworker->AddComponent<Transform>(80, 200, 0, 0, 32, 32, 1);
+	//clockworker->AddComponent<SpriteComponent>("clockworker", "standard", 2,200, false);
+	//clockworker->AddComponent<RigidBodyComponent>();
+	//clockworker->AddComponent<ColliderComponent>("ENEMY");
+	//clockworker->AddComponent<EnemySM>(dino, EnemyType::Throw);
+	//scene.Add(clockworker);
 
-	std::shared_ptr<GameObject> clockworker_1 = std::make_shared<GameObject>("clockworker_1", false);
-	clockworker_1->AddComponent<Transform>(250, 200, 0, 0, 32, 32, 1);
-	clockworker_1->AddComponent<SpriteComponent>("clockworker", "standard", 2, 200, false);
-	clockworker_1->AddComponent<RigidBodyComponent>();
-	clockworker_1->AddComponent<ColliderComponent>("ENEMY");
-	clockworker_1->AddComponent<EnemySM>(dino, EnemyType::Charge);
-	scene.Add(clockworker_1);
+	//std::shared_ptr<GameObject> clockworker_1 = std::make_shared<GameObject>("clockworker_1", false);
+	//clockworker_1->AddComponent<Transform>(250, 200, 0, 0, 32, 32, 1);
+	//clockworker_1->AddComponent<SpriteComponent>("clockworker", "standard", 2, 200, false);
+	//clockworker_1->AddComponent<RigidBodyComponent>();
+	//clockworker_1->AddComponent<ColliderComponent>("ENEMY");
+	//clockworker_1->AddComponent<EnemySM>(dino, EnemyType::Charge);
+	//scene.Add(clockworker_1);
 
 
-	std::shared_ptr<GameObject> clockworker_2 = std::make_shared<GameObject>("clockworker_2", false);
-	clockworker_2->AddComponent<Transform>(400, 100, 0, 0, 32, 32, 1);
-	clockworker_2->AddComponent<SpriteComponent>("clockworker", "standard", 2, 200, false);
-	clockworker_2->AddComponent<RigidBodyComponent>();
-	clockworker_2->AddComponent<ColliderComponent>("ENEMY");
-	clockworker_2->AddComponent<EnemySM>(dino, EnemyType::Charge);
-	scene.Add(clockworker_2);
+	//std::shared_ptr<GameObject> clockworker_2 = std::make_shared<GameObject>("clockworker_2", false);
+	//clockworker_2->AddComponent<Transform>(400, 100, 0, 0, 32, 32, 1);
+	//clockworker_2->AddComponent<SpriteComponent>("clockworker", "standard", 2, 200, false);
+	//clockworker_2->AddComponent<RigidBodyComponent>();
+	//clockworker_2->AddComponent<ColliderComponent>("ENEMY");
+	//clockworker_2->AddComponent<EnemySM>(dino, EnemyType::Charge);
+	//scene.Add(clockworker_2);
 
 
 

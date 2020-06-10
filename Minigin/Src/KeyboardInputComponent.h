@@ -19,7 +19,6 @@ namespace dae
 		std::string m_ShootInput;
 		std::string m_JumpInput;
 		Transform* m_pTransform;
-		SpriteComponent* m_pSprite;
 
 		//this makes sure our movement doens't glitch
 		bool m_LeftPress = false;

@@ -22,6 +22,7 @@ namespace dae
 		void Initialize() override;
 		void Render() const override;
 
+		//actions
 		void Update(float deltaTime) override;
 		void JumpIntoAir();
 		void TrapInBell();
@@ -39,11 +40,15 @@ namespace dae
 		ColliderComponent* GetRightFloorCollider() const { return m_pRightFloorCollider; }
 		ColliderComponent* GetLeftPlatformCollider() const { return m_pLeftPlatformCollider; }
 		ColliderComponent* GetRightPlatformCollider() const { return m_pRightPlatformCollider; }
+		ColliderComponent* GetLeftWallCollider() const { return m_pLeftWallCollider; }
+		ColliderComponent* GetRightWallCollider() const { return m_pRightWallCollider; }
 
 		void SetLeftFloorCollider(bool enable);
 		void SetRightFloorCollider(bool enable);
 		void SetLeftPlatformCollider(bool enable) { m_pLeftPlatformCollider->SetEnabled(enable); }
 		void SetRightPlatformCollider(bool enable) { m_pRightPlatformCollider->SetEnabled(enable); }
+		void SetLeftWallCollider(bool enable) { m_pLeftWallCollider->SetEnabled(enable); }
+		void SetRightWallCollider(bool enable) { m_pRightWallCollider->SetEnabled(enable); }
 
 		float GetJumpHeight() const { return m_JumpHeight; }
 		void SetJumpHeight(float jumpHeight) { m_JumpHeight = jumpHeight; }
@@ -78,6 +83,9 @@ namespace dae
 
 		ColliderComponent* m_pLeftPlatformCollider = nullptr;
 		ColliderComponent* m_pRightPlatformCollider = nullptr;
+
+		ColliderComponent* m_pLeftWallCollider = nullptr;
+		ColliderComponent* m_pRightWallCollider = nullptr;
 
 		const float m_HorizontalJumpHeight = -175.f;
 		const float m_VerticalJumpHeight = -250.f;

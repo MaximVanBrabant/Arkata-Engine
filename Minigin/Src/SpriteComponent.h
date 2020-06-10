@@ -17,6 +17,7 @@ namespace dae
 		void Render() const override;
 		void Update(float deltaTime) override;
 		int AddTexture(const std::string& textureId);
+		void RemoveTexture(int textureIndex);
 		std::shared_ptr<Texture2D> GetTexture(int id) const;
 
 		//animation on the same sprite

@@ -16,5 +16,7 @@ namespace dae
 		float m_FloatSpeed = 50.f;
 		float m_TrapDuration = 4.f;
 		float m_CurrentDuration = 0.f;
+
+		int m_TextureBubbleIndex;
 	};
 }

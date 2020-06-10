@@ -150,8 +150,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\BellComponent.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\SelfDestructComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Minigin\Minigin.vcxproj">
@@ -159,7 +161,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\BellComponent.h" />
     <ClInclude Include="Src\Game.h" />
+    <ClInclude Include="Src\SelfDestructComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
