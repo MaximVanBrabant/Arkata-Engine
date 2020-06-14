@@ -6,7 +6,7 @@ namespace dae
 	class BubbleEnemyState : public EnemyState
 	{
 	public:
-		BubbleEnemyState(EnemySM* enemySM) : EnemyState(enemySM) {}
+		BubbleEnemyState(EnemySM* enemySM) : EnemyState(enemySM), m_TextureBubbleIndex{} {}
 		void Entry() override;
 		void JumpIntoAir() override {}
 		void Update(float deltaTime) override;
@@ -17,6 +17,7 @@ namespace dae
 		float m_TrapDuration = 4.f;
 		float m_CurrentDuration = 0.f;
 
+		//we need this so we can delete the texture whenever the enemy pops out of the bubble
 		int m_TextureBubbleIndex;
 	};
 }

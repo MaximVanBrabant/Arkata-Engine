@@ -12,7 +12,7 @@ namespace dae
 		void JumpIntoAir() override;
 		void StandingStill() override {};
 		void ShootBell() override;
-		void Displace(Direction direction) override;
+		void Displace() override;
 	private:
 
 	};

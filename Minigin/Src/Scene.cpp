@@ -22,7 +22,10 @@ void dae::Scene::ListAllEntities() const
 }
 
 //first scene has index 0
-Scene::Scene(const std::string& name) : m_Name(name), m_Id{ m_IdCounter } { ++m_IdCounter; }
+Scene::Scene(const std::string& name) : m_Name(name), m_Id{ m_IdCounter }
+{
+	++m_IdCounter;
+}
 
 Scene::~Scene() = default;
 
@@ -36,7 +39,7 @@ void Scene::Update(float deltaTime)
 
 	//MAKE USE OF THREADS HERE !!!!!
 
-	for (int i{}; i < m_Objects.size(); ++i)
+	for (int i{}; i < static_cast<int>(m_Objects.size()); ++i)
 	{
 		auto& object = m_Objects[i];
 
@@ -75,7 +78,7 @@ void Scene::Update(float deltaTime)
 	//delete inactive objects
 	for (int index : m_NonActiveIndices)
 	{
-		if (index < m_Objects.size() - 1)
+		if (index < static_cast<int>(m_Objects.size() - 1))
 		{
 			m_Objects[index] = m_Objects[m_Objects.size() - 1];
 			m_Objects.pop_back();

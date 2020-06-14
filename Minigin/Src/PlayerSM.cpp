@@ -44,6 +44,17 @@ void dae::PlayerSM::Update(float deltaTime)
 		m_CurrentShotCooldown = 0.0f;
 	}
 
+	if (m_IsImmune && m_CurrentImmuneCooldown < m_ImmuneCooldown)
+	{
+		m_CurrentImmuneCooldown += deltaTime;
+	}
+	else if(m_CurrentImmuneCooldown > m_ImmuneCooldown && m_IsImmune)
+	{
+		m_IsImmune = false;
+		m_CurrentImmuneCooldown = 0.0f;
+	}
+
+
 }
 
 void dae::PlayerSM::JumpIntoAir()
@@ -59,7 +70,7 @@ void dae::PlayerSM::ShootBell()
 	m_CanShoot = false;
 	m_CurrentPlayerState->ShootBell();
 }
-void dae::PlayerSM::Displace(Direction direction)
+void dae::PlayerSM::Displace()
 {
-	m_CurrentPlayerState->Displace(direction);
+	m_CurrentPlayerState->Displace();
 }

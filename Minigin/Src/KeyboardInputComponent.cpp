@@ -47,21 +47,20 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 
 		if (InputManager::GetInstance().m_Event.type == SDL_KEYDOWN)
 		{
-			//implement state switches here for state machine -> also change movement vector
 			std::string keyCode = std::to_string(InputManager::GetInstance().m_Event.key.keysym.sym);
 
 			if (keyCode.compare(m_LeftInput) == 0)
 			{
 				m_LeftPress = true;
 				playerSM->SetDirection(Direction::left);
-				playerSM->Displace(Direction::left);
+				playerSM->Displace();
 			}
 			else if (keyCode.compare(m_RightInput) == 0)
 			{
 				m_RightPress = true;
 				playerSM->SetDirection(Direction::right);
 
-				playerSM->Displace(Direction::right);
+				playerSM->Displace();
 			}
 
 			if (keyCode.compare(m_ShootInput) == 0)
@@ -106,12 +105,12 @@ void dae::KeyboardInputComponent::Update(float deltaTime)
 				if (m_pTransform->GetVelocity().x > 0)
 				{
 					playerSM->SetDirection(Direction::right);
-					playerSM->Displace(Direction::right);
+					playerSM->Displace();
 				}
 				else if(m_pTransform->GetVelocity().x < 0)
 				{
 					playerSM->SetDirection(Direction::left);
-					playerSM->Displace(Direction::left);
+					playerSM->Displace();
 				}
 				else
 				{

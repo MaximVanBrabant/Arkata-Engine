@@ -19,7 +19,7 @@ namespace dae
 		virtual void JumpIntoAir() = 0;
 		virtual void StandingStill() = 0;
 		virtual void ShootBell() = 0;
-		virtual void Displace(Direction direction) = 0;
+		virtual void Displace() = 0;
 	protected:
 		PlayerSM* m_PlayerSM;
 		Transform* m_pTransform;

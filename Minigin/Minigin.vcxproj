@@ -209,10 +209,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\BubbleEnemyState.h" />
     <ClInclude Include="Src\EnemySM.h" />
     <ClInclude Include="Src\EnemyState.h" />
+    <ClInclude Include="Src\EntityCounter.h" />
     <ClInclude Include="Src\JumpEnemyState.h" />
     <ClInclude Include="Src\JumpPlayerState.h" />
+    <ClInclude Include="Src\KillObserver.h" />
     <ClInclude Include="Src\MovePlayerState.h" />
     <ClInclude Include="Src\IdlePlayerState.h" />
+    <ClInclude Include="Src\Observer.h" />
     <ClInclude Include="Src\PlayerState.h" />
     <ClInclude Include="Src\PlayerSM.h" />
     <ClInclude Include="Src\CollisionManager.h" />
@@ -234,9 +237,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\ResourceManager.h" />
     <ClInclude Include="Src\Scene.h" />
     <ClInclude Include="Src\SceneManager.h" />
+    <ClInclude Include="Src\ScoreObserver.h" />
     <ClInclude Include="Src\SeekEnemyState.h" />
     <ClInclude Include="Src\Singleton.h" />
     <ClInclude Include="Src\SpriteComponent.h" />
+    <ClInclude Include="Src\Subject.h" />
     <ClInclude Include="Src\TextComponent.h" />
     <ClInclude Include="Src\Texture2D.h" />
     <ClInclude Include="Src\Transform.h" />
@@ -246,8 +251,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Src\AttackEnemyState.cpp" />
     <ClCompile Include="Src\BubbleEnemyState.cpp" />
     <ClCompile Include="Src\EnemySM.cpp" />
+    <ClCompile Include="Src\EntityCounter.cpp" />
     <ClCompile Include="Src\JumpEnemyState.cpp" />
     <ClCompile Include="Src\JumpPlayerState.cpp" />
+    <ClCompile Include="Src\KillObserver.cpp" />
     <ClCompile Include="Src\MovePlayerState.cpp" />
     <ClCompile Include="Src\IdlePlayerState.cpp" />
     <ClCompile Include="Src\PlayerSM.cpp" />
@@ -274,6 +281,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Src\ResourceManager.cpp" />
     <ClCompile Include="Src\Scene.cpp" />
     <ClCompile Include="Src\SceneManager.cpp" />
+    <ClCompile Include="Src\ScoreObserver.cpp" />
     <ClCompile Include="Src\SeekEnemyState.cpp" />
     <ClCompile Include="Src\SpriteComponent.cpp" />
     <ClCompile Include="Src\TextComponent.cpp" />

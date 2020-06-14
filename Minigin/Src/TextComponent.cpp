@@ -6,10 +6,17 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include "Renderer.h"
+#include "GameObject.h"
+#include "Transform.h"
 
 dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font)
 	:m_Text{text}, m_Font{font}, m_Texture{nullptr}, m_NeedsUpdate{true}
 {
+}
+
+void dae::TextComponent::Initialize()
+{
+	m_pTransform = m_Owner->GetComponent<Transform>();
 }
 
 void dae::TextComponent::Update(float deltaTime)
@@ -38,8 +45,8 @@ void dae::TextComponent::Render() const
 {
 	if (m_Texture != nullptr)
 	{
-		//const auto pos = m_Transform.GetPosition();
-		//Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+		const auto pos = m_pTransform->GetPosition();
+		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}
 }
 
@@ -47,11 +54,4 @@ void dae::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_NeedsUpdate = true;
-}
-
-void dae::TextComponent::SetPosition(const float x, const float y)
-{
-	UNREFERENCED_PARAMETER(x);
-	UNREFERENCED_PARAMETER(y);
-	//m_Transform.SetPosition(x, y, 0.0f);
 }

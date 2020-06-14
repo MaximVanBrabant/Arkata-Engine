@@ -17,11 +17,10 @@ dae::SpriteComponent::SpriteComponent(const std::string& textureId)
 dae::SpriteComponent::SpriteComponent(const std::string& textureId, const std::string& animationId, unsigned int numFrames, unsigned int animationSpeed, bool isStatic)
 	:m_IsAnimated{true}, m_NumFrames{numFrames}, m_AnimationSpeed{animationSpeed}, m_IsStatic{isStatic}
 {
-		Animation singleAnimation = Animation(0, numFrames, animationSpeed);
-		m_Animations.emplace(animationId, singleAnimation);
-		m_CurAnimationName = animationId;
+	Animation singleAnimation = Animation(0, numFrames, animationSpeed);
+	m_Animations.emplace(animationId, singleAnimation);
 
-	Play(m_CurAnimationName);
+	Play(animationId);
 	m_pTextures.push_back(ResourceManager::GetInstance().GetTexture(textureId));
 }
 
@@ -33,10 +32,13 @@ void dae::SpriteComponent::AddAnimation(const std::string& animationId,unsigned 
 
 void dae::SpriteComponent::Play(const std::string& animationName)
 {
-	m_NumFrames = m_Animations[animationName].m_NumFrames;
-	m_AnimationIndex = m_Animations[animationName].m_Index;
-	m_AnimationSpeed = m_Animations[animationName].m_AnimationSpeed;
-	m_CurAnimationName = animationName;
+	if (m_CurAnimationName.compare(animationName))
+	{
+		m_NumFrames = m_Animations[animationName].m_NumFrames;
+		m_AnimationIndex = m_Animations[animationName].m_Index;
+		m_AnimationSpeed = m_Animations[animationName].m_AnimationSpeed;
+		m_CurAnimationName = animationName;
+	}
 }
 
 void dae::SpriteComponent::Initialize()

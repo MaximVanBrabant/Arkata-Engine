@@ -14,7 +14,11 @@ void dae::IdlePlayerState::Entry()
 	if (m_PlayerSM->m_Owner->HasComponent<SpriteComponent>())
 	{
 		auto sprite = m_PlayerSM->m_Owner->GetComponent<SpriteComponent>();
-		sprite->Play("idle");
+		if(m_PlayerSM->GetDirection() == Direction::left)
+			sprite->Play("idle_left");
+		else
+			sprite->Play("idle_right");
+
 	}
 	if (m_pTransform != nullptr)
 	{
@@ -33,14 +37,19 @@ void dae::IdlePlayerState::ShootBell()
 	if (m_PlayerSM->m_Owner->HasComponent<SpriteComponent>())
 	{
 		auto sprite = m_PlayerSM->m_Owner->GetComponent<SpriteComponent>();
-		sprite->Play("shoot");
-		float offset = 10.f;
+		//put these vars inside playerSM
+		float offset = 20.f;
 		float shootingVelocity = 100.f;
-
 		if (m_PlayerSM->GetDirection() == Direction::left)
 		{
+			sprite->Play("shoot_left");
 			offset = -offset;
 			shootingVelocity = -shootingVelocity;
+
+		}
+		else
+		{
+			sprite->Play("shoot_right");
 		}
 
 		//create bell
@@ -49,15 +58,14 @@ void dae::IdlePlayerState::ShootBell()
 		bubble->AddComponent<ColliderComponent>("BUBBLE");
 		bubble->AddComponent<SpriteComponent>("bubble");
 		bubble->AddComponent<SelfDestructComponent>(4.f);
-		bubble->AddComponent<BellComponent>();
+		bubble->AddComponent<BellComponent>(shootingVelocity);
 
 		SceneManager::GetInstance().GetActiveScene()->Add(bubble);
 	}
 }
 
-void dae::IdlePlayerState::Displace(Direction direction)
+void dae::IdlePlayerState::Displace()
 {
 	m_PlayerSM->SwitchState(m_PlayerSM->GetMoveState());
-	UNREFERENCED_PARAMETER(direction);
 }
 

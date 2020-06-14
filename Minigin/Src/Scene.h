@@ -1,6 +1,5 @@
 #pragma once
 #include "SceneManager.h"
-
 namespace dae
 {
 	struct CollisionInfo;
@@ -35,6 +34,7 @@ namespace dae
 
 		//static
 		static unsigned int m_IdCounter; 
+
 
 	};
 

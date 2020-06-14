@@ -6,7 +6,7 @@ namespace dae
 	class BellComponent : public Component
 	{
 	public:
-		BellComponent();
+		BellComponent(float velocity);
 		void Initialize() override;
 		void Render() const override {}
 		void Update(float deltaTime) override;
@@ -15,5 +15,8 @@ namespace dae
 		const float m_RisingVelocity = 100.f;
 		bool m_RisingPhase;
 		Transform* m_pTransform;
+
+		float m_StartVelocity;
+		
 	};
 }

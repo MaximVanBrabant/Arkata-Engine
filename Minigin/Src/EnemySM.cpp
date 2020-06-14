@@ -104,22 +104,22 @@ void dae::EnemySM::SetRightFloorCollider(bool enable)
 
 void dae::EnemySM::Render() const
 {
-	SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
-	if (m_pLeftFloorCollider->GetEnabled())
-	{
-		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftFloorCollider->GetCollider());
-	}
-	if(m_pLeftPlatformCollider->GetEnabled())
-		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftPlatformCollider->GetCollider());
-	if(m_pRightFloorCollider->GetEnabled())
-		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightFloorCollider->GetCollider());
-	if (m_pRightPlatformCollider->GetEnabled())
-	{
-		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightPlatformCollider->GetCollider());
-	}
+	//SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
+	//if (m_pLeftFloorCollider->GetEnabled())
+	//{
+	//	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftFloorCollider->GetCollider());
+	//}
+	//if(m_pLeftPlatformCollider->GetEnabled())
+	//	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftPlatformCollider->GetCollider());
+	//if(m_pRightFloorCollider->GetEnabled())
+	//	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightFloorCollider->GetCollider());
+	//if (m_pRightPlatformCollider->GetEnabled())
+	//{
+	//	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightPlatformCollider->GetCollider());
+	//}
 
-	if(m_pRightWallCollider->GetEnabled())
-		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightWallCollider->GetCollider());
-	if(m_pLeftWallCollider->GetEnabled())
-		SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftWallCollider->GetCollider());
+	//if(m_pRightWallCollider->GetEnabled())
+	//	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pRightWallCollider->GetCollider());
+	//if(m_pLeftWallCollider->GetEnabled())
+	//	SDL_RenderDrawRect(dae::Renderer::GetInstance().GetSDLRenderer(), &m_pLeftWallCollider->GetCollider());
 }

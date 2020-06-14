@@ -1,6 +1,6 @@
 #pragma once
 #include "Singleton.h"
-
+#include "EntityCounter.h"
 namespace dae
 {
 	class Scene;
@@ -13,10 +13,19 @@ namespace dae
 		void Render();
 		void SetActiveScene(int id);
 		const std::shared_ptr<Scene>& GetActiveScene() const { return m_Scenes[m_ActiveSceneId]; }
+		int GetActiveSceneId()const { return m_ActiveSceneId; }
+
+		EntityCounter* GetEntityCounter() { return &m_EntityCounter; }
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		std::vector<std::shared_ptr<Scene>> m_Scenes;
 		int m_ActiveSceneId = 0;
+
+
+
+		// make this part of the scenemanager
+		EntityCounter m_EntityCounter;
+
 	};
 }

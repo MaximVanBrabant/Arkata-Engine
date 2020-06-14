@@ -17,10 +17,10 @@ namespace dae
 		void Initialize() override;
 
 		void Update(float deltaTime) override;
-		void JumpIntoAir(); 
-		void StandingStill(); 
-		void ShootBell(); 
-		void Displace(Direction direction);
+		void JumpIntoAir();
+		void StandingStill();
+		void ShootBell();
+		void Displace();
 		Direction GetDirection() const { return m_Direction; }
 		void SetDirection(Direction direction) { m_Direction = direction; }
 
@@ -28,7 +28,10 @@ namespace dae
 		const std::shared_ptr<PlayerState>& GetMoveState() const { return m_Move; }
 		const std::shared_ptr<PlayerState>& GetJumpState() const { return m_Jump; }
 
-		bool ReadyToShoot() { return m_CanShoot; }
+		bool ReadyToShoot() const { return m_CanShoot; }
+		bool IsImmune() const { return m_IsImmune; }
+
+		void SetImmune(bool enable) { m_IsImmune = enable; }
 
 	private:
 		std::shared_ptr<PlayerState> m_Idle; 
@@ -38,10 +41,15 @@ namespace dae
 		std::shared_ptr<PlayerState> m_CurrentPlayerState;
 
 		bool m_CanShoot = true;
-		float m_ShootCooldown = 3.f;
+		const float m_ShootCooldown = 0.5f;
 		float m_CurrentShotCooldown = 0.f;
 
-		Direction m_Direction = Direction::left;
+		bool m_IsImmune = false;
+		const float m_ImmuneCooldown = 0.5f;
+		float m_CurrentImmuneCooldown = 0.f;
+
+
+		Direction m_Direction = Direction::right;
 	};
 }
 

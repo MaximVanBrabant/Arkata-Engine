@@ -9,7 +9,7 @@ void dae::BubbleEnemyState::Entry()
 	m_TextureBubbleIndex = m_pTransform->m_Owner->GetComponent<SpriteComponent>()->AddTexture("bubble");
 	m_pTransform->m_Owner->GetComponent<RigidBodyComponent>()->m_IsActive = false;
 	m_pTransform->m_Owner->GetComponent<ColliderComponent>()->ChangeTag("BUBBLE_ENEMY");
-	m_pTransform->SetVelocity(0, -100.f);
+	m_pTransform->SetVelocity(0, -m_FloatSpeed);
 }
 
 void dae::BubbleEnemyState::Update(float deltaTime)

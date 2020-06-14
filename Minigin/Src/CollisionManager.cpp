@@ -10,7 +10,10 @@
 #include "EnemySM.h"
 #include "JumpEnemyState.h"
 #include <thread>
-
+#include "EntityCounter.h"
+#include "FoodComponent.h"
+#include "PlayerComponent.h"
+#include "PlayerSM.h"
 
 void dae::CollisionManager::CollisionUpdate()
 {
@@ -26,18 +29,52 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_ENEMY_COLLISION)
 	{
-		//collisionInfo.firstGameObject->Destroy();
+		
+		if (collisionInfo.firstGameObject->HasComponent<PlayerSM>())
+		{
+			auto playerSM = collisionInfo.firstGameObject->GetComponent<PlayerSM>();
+
+			if (!playerSM->IsImmune())
+			{
+				SceneManager::GetInstance().GetEntityCounter()->HealthDecrementation(1, collisionInfo.firstGameObject->GetComponent<PlayerComponent>()->GetPlayerID(), collisionInfo.firstGameObject);
+				playerSM->SetImmune(true);
+			}
+		}
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_PROJECTILE_COLLISION)
 	{
-		//collisionInfo.firstGameObject->Destroy();
-		collisionInfo.secondGameObject->Destroy();
+		if (collisionInfo.firstGameObject->HasComponent<PlayerSM>())
+		{
+			auto playerSM = collisionInfo.firstGameObject->GetComponent<PlayerSM>();
+			if (!playerSM->IsImmune())
+			{
+
+				SceneManager::GetInstance().GetEntityCounter()->HealthDecrementation(1, collisionInfo.firstGameObject->GetComponent<PlayerComponent>()->GetPlayerID(), collisionInfo.firstGameObject);
+				playerSM->SetImmune(true);
+
+				collisionInfo.secondGameObject->Destroy();
+			}
+
+
+		}
 	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_ITEM_COLLISION)
 	{
 		//add score
-		if(collisionInfo.secondGameObject->GetComponent<ColliderComponent>()->GetIsGrounded())
+		if (collisionInfo.secondGameObject->GetComponent<ColliderComponent>()->GetIsGrounded() && collisionInfo.firstGameObject->HasComponent<PlayerComponent>())
+		{
+			if(collisionInfo.secondGameObject->GetComponent<FoodComponent>()->GetFoodType() == FoodType::fries)
+			{
+				std::cout << "we just ate fries" << std::endl;
+				SceneManager::GetInstance().GetEntityCounter()->ScoreIncrementation(200, collisionInfo.firstGameObject->GetComponent<PlayerComponent>()->GetPlayerID());
+			}
+			else
+			{
+				SceneManager::GetInstance().GetEntityCounter()->ScoreIncrementation(100, collisionInfo.firstGameObject->GetComponent<PlayerComponent>()->GetPlayerID());
+				std::cout << "we just ate melons" << std::endl;
+			}
 			collisionInfo.secondGameObject->Destroy();
+		}
 
 	}
 	else if (collisionInfo.collisionType == CollisionType::ENEMY_BUBBLE_COLLISION)
@@ -59,21 +96,25 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 		foodItem->AddComponent<RigidBodyComponent>();
 		if (enemySM->GetEnemyType() == EnemyType::Charge)
 		{
+			foodItem->AddComponent<FoodComponent>(FoodType::melon);
 			foodItem->AddComponent<SpriteComponent>("melon");
 		}
 		else if (enemySM->GetEnemyType() == EnemyType::Throw)
 		{
+			foodItem->AddComponent<FoodComponent>(FoodType::fries);
 			foodItem->AddComponent<SpriteComponent>("fries");
 		}
-
-		collisionInfo.secondGameObject->Destroy();
-
-
 		SceneManager::GetInstance().GetActiveScene()->Add(foodItem);
+
+		//destoy enemy -> notify any observers
+		collisionInfo.secondGameObject->Destroy();
+		SceneManager::GetInstance().GetEntityCounter()->EnemyKilled();
+
+
 
 
 	}
-	else if (collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION)
+	else if (collisionInfo.collisionType == CollisionType::RIGID_TILE_COLLISION || collisionInfo.collisionType == CollisionType::PLAYER_BUBBLE_COLLISION)
 	{
 		//get colliders
 		//first check if i have those components on the gameobjects
@@ -167,10 +208,20 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 		ColliderComponent* playerCollider{ collisionInfo.firstGameObject->GetComponent<ColliderComponent>() };
 		ColliderComponent* tileCollider{ collisionInfo.secondGameObject->GetComponent<ColliderComponent>() };
 		Transform* playerTransform{ collisionInfo.firstGameObject->GetComponent<Transform>() };
-		//if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) == abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
-		//{
-		//	return;
-		//}
+
+		//NOT SURE ABOUT THIS
+		auto enemySM = collisionInfo.firstGameObject->GetComponent<EnemySM>();
+		auto enemyCollider = collisionInfo.firstGameObject->GetComponent<ColliderComponent>();
+
+		auto enemySM_01 = collisionInfo.secondGameObject->GetComponent<EnemySM>();
+		auto enemyCollider_01 = collisionInfo.secondGameObject->GetComponent<ColliderComponent>();
+
+
+		if (enemyCollider->GetIsGrounded() && enemyCollider_01->GetIsGrounded())
+		{
+			enemySM->SetInverseMovement(true);
+			enemySM_01->SetInverseMovement(true);
+		}
 
 		if (abs(playerCollider->GetCenterX() - tileCollider->GetCenterX()) < abs(playerCollider->GetCenterY() - tileCollider->GetCenterY()))
 		{
@@ -189,7 +240,6 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 			if (playerCollider->GetCenterX() > tileCollider->GetCenterX())
 			{
 				playerTransform->SetPosition(static_cast<float>(tileCollider->GetCollider().x + tileCollider->GetCollider().w), playerTransform->GetPosition().y);
-
 			}
 		}
 	}
@@ -211,10 +261,6 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 				playerRigid->EnableGravity(true);
 			}
 		}
-	}
-	else if (collisionInfo.collisionType == CollisionType::AI_FLOOR_TILE_COLLISION)
-	{
-		//std::cout << "ai collider collides with tile" << std::endl;
 	}
 	else if (collisionInfo.collisionType == CollisionType::AI_FLOOR_NONE_COLLISION)
 	{
@@ -314,7 +360,7 @@ void dae::CollisionManager::CheckCollisionOnAIColliders(const std::vector<int>& 
 				AICollider->SetIsColliding(false);
 				const std::string& AITag = AICollider->GetTag();
 
-				for (int i{ 0 }; i < gameObjects.size(); ++i)
+				for (int i{ 0 }; i < static_cast<int>(gameObjects.size()); ++i)
 				{
 					auto& otherGameObject = gameObjects[i];
 					if (otherGameObject == enemy)
@@ -365,7 +411,7 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 	auto& gameObjects = SceneManager::GetInstance().GetActiveScene()->GetGameObjects();
 	std::vector<int> vEnemyIndices{};
 
-	for (int i{ 0 }; i < gameObjects.size(); ++i)
+	for (int i{ 0 }; i < static_cast<int>(gameObjects.size()); ++i)
 	{
 		if (gameObjects[i]->HasComponent<ColliderComponent>())
 		{
@@ -382,7 +428,7 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 
 	
 
-	for (int i{ 0 }; i < gameObjects.size(); ++i)
+	for (int i{ 0 }; i < static_cast<int>(gameObjects.size()); ++i)
 	{
 		auto& firstGameObject = gameObjects[i];
 		if (firstGameObject->HasComponent<ColliderComponent>())
@@ -392,7 +438,7 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 			if (!firstCollider->GetEnabled())
 				continue;
 
-			for (int j{ i + 1 }; j < gameObjects.size(); ++j)
+			for (int j{ i + 1 }; j < static_cast<int>(gameObjects.size()); ++j)
 			{
 				auto& secondGameObject = gameObjects[j];
 				if (firstGameObject->GetName().compare(secondGameObject->GetName()) != 0 && secondGameObject->HasComponent<ColliderComponent>())
@@ -452,6 +498,15 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_BUBBLE_ENEMY_COLLISION, firstGameObject, secondGameObject));
 							else
 								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_BUBBLE_ENEMY_COLLISION, secondGameObject, firstGameObject));
+							continue;
+
+						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "PLAYER", "BUBBLE"))
+						{
+							if (firstTag.compare("PLAYER") == 0)
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_BUBBLE_COLLISION, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects(CollisionInfo(CollisionType::PLAYER_BUBBLE_COLLISION, secondGameObject, firstGameObject));
 							continue;
 
 						}

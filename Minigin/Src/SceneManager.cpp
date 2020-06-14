@@ -17,6 +17,9 @@ void dae::SceneManager::Render()
 void dae::SceneManager::SetActiveScene(int id)
 {
 	m_ActiveSceneId = id;
+
+	//when it switches over to a new scene we have to add the UI back which are the Observers for the score
+	SceneManager::GetInstance().GetEntityCounter()->InitializeObserversInNewScene();
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)

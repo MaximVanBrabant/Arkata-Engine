@@ -11,7 +11,10 @@ void dae::JumpPlayerState::Entry()
 	if (m_PlayerSM->m_Owner->HasComponent<SpriteComponent>())
 	{
 		auto sprite = m_PlayerSM->m_Owner->GetComponent<SpriteComponent>();
-		sprite->Play("jumping");
+		if (m_PlayerSM->GetDirection() == Direction::left)
+			sprite->Play("jumping_left");
+		else
+			sprite->Play("jumping_right");
 	}
 	if (m_PlayerSM->m_Owner->HasComponent<ColliderComponent>() && m_PlayerSM->m_Owner->HasComponent<RigidBodyComponent>())
 	{
@@ -63,15 +66,17 @@ void dae::JumpPlayerState::ShootBell()
 	/*std::cout << "we cant shoot while in the air" << std::endl;*/
 }
 
-void dae::JumpPlayerState::Displace(Direction direction)
+void dae::JumpPlayerState::Displace()
 {
 	//move like normal
-	if (direction == Direction::left)
+	if (m_PlayerSM->GetDirection() == Direction::left)
 	{
+		m_PlayerSM->m_Owner->GetComponent<SpriteComponent>()->Play("jumping_left");
 		m_pTransform->SetVelocity(-m_JumpMoveVelocity, m_pTransform->GetVelocity().y);
 	}
-	else if (direction == Direction::right)
+	else if (m_PlayerSM->GetDirection() == Direction::right)
 	{
+		m_PlayerSM->m_Owner->GetComponent<SpriteComponent>()->Play("jumping_right");
 		m_pTransform->SetVelocity(m_JumpMoveVelocity, m_pTransform->GetVelocity().y);
 	}
 }

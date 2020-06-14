@@ -162,7 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\BellComponent.h" />
+    <ClInclude Include="Src\FoodComponent.h" />
     <ClInclude Include="Src\Game.h" />
+    <ClInclude Include="Src\PlayerComponent.h" />
     <ClInclude Include="Src\SelfDestructComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

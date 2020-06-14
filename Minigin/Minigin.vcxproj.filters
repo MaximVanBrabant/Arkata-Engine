@@ -64,6 +64,12 @@
     <Filter Include="Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates">
       <UniqueIdentifier>{ffc0a790-128f-4725-ba3e-1d5048b55d55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Observer">
+      <UniqueIdentifier>{9c666555-4e2c-416d-99cf-bb28c51f1abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Observer">
+      <UniqueIdentifier>{6c23386b-48a0-409f-a31b-fad25dd363b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\FPSComponent.h">
@@ -174,6 +180,21 @@
     <ClInclude Include="Src\BubbleEnemyState.h">
       <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Subject.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Observer.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\EntityCounter.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\KillObserver.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ScoreObserver.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\FPSComponent.cpp">
@@ -268,6 +289,15 @@
     </ClCompile>
     <ClCompile Include="Src\BubbleEnemyState.cpp">
       <Filter>Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EntityCounter.cpp">
+      <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\KillObserver.cpp">
+      <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ScoreObserver.cpp">
+      <Filter>Source Files\Observer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
