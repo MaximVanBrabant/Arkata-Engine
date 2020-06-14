@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "EnemySM.h"
 #include "ColliderComponent.h"
+#include "InputManager.h"
 
 void dae::SeekEnemyState::Entry()
 {
@@ -15,14 +16,21 @@ void dae::SeekEnemyState::Update(float deltaTime)
 
 	if (m_pEnemySM->GetTarget().expired())
 	{
-		m_pEnemySM->SetRightFloorCollider(false);
-		m_pEnemySM->SetLeftFloorCollider(false);
-		m_pEnemySM->SetRightPlatformCollider(false);
-		m_pEnemySM->SetLeftPlatformCollider(false);
-		m_pEnemySM->SetLeftWallCollider(false);
-		m_pEnemySM->SetRightWallCollider(false);
-		m_pTransform->SetVelocity(0, m_pTransform->GetVelocity().y);
-		return;
+		if (InputManager::GetInstance().GetSecondDino() != nullptr)
+		{
+			m_pEnemySM->SetTarget(InputManager::GetInstance().GetSecondDino());
+		}
+		else
+		{
+			m_pEnemySM->SetRightFloorCollider(false);
+			m_pEnemySM->SetLeftFloorCollider(false);
+			m_pEnemySM->SetRightPlatformCollider(false);
+			m_pEnemySM->SetLeftPlatformCollider(false);
+			m_pEnemySM->SetLeftWallCollider(false);
+			m_pEnemySM->SetRightWallCollider(false);
+			m_pTransform->SetVelocity(0, m_pTransform->GetVelocity().y);
+			return;
+		}
 	}
 
 	//attack cooldown

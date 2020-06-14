@@ -13,6 +13,7 @@ namespace dae
 		void InitializeLevel01();
 		void InitializeLevel02();
 		void InitializeLevel03();
+		void InitializeLevel04();
 
 	};
 }

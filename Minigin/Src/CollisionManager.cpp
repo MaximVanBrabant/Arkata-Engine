@@ -58,6 +58,10 @@ void dae::CollisionManager::ApplyCollisionEffects(CollisionInfo collisionInfo)
 
 		}
 	}
+	else if (collisionInfo.collisionType == CollisionType::BUBBLE_MAITA_PLAYER)
+	{
+		collisionInfo.secondGameObject->Destroy();
+	}
 	else if (collisionInfo.collisionType == CollisionType::PLAYER_ITEM_COLLISION)
 	{
 		//add score
@@ -424,9 +428,9 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 	}
 
 	//HERE YOU CAN USE THREAD
-	CheckCollisionOnAIColliders(vEnemyIndices);
+	std::thread thread{ &CollisionManager::CheckCollisionOnAIColliders,this, std::ref(vEnemyIndices)};
 
-	
+//	CheckCollisionOnAIColliders(vEnemyIndices);
 
 	for (int i{ 0 }; i < static_cast<int>(gameObjects.size()); ++i)
 	{
@@ -492,6 +496,16 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 							continue;
 
 						}
+						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "BUBBLE", "MAITA_PLAYER"))
+						{
+							if (firstTag.compare("BUBBLE") == 0)
+								ApplyCollisionEffects(CollisionInfo(CollisionType::BUBBLE_MAITA_PLAYER, firstGameObject, secondGameObject));
+							else
+								ApplyCollisionEffects(CollisionInfo(CollisionType::BUBBLE_MAITA_PLAYER, secondGameObject, firstGameObject));
+							continue;
+
+						}
+
 						if (Collision::CheckCollisionTypeWithTags(firstTag, secondTag, "PLAYER", "BUBBLE_ENEMY"))
 						{
 							if (firstTag.compare("PLAYER") == 0)
@@ -589,4 +603,6 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 			}
 		}
 	}
+
+	thread.join();
 }

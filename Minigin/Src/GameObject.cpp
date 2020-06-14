@@ -49,7 +49,5 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::Destroy()
 {
-	//destroy it at the end of the game loop
-	std::cout << "this gameobject will be destroyed: " << this->GetName() << std::endl;
 	m_IsActive = false;
 }

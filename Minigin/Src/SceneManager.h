@@ -15,6 +15,8 @@ namespace dae
 		const std::shared_ptr<Scene>& GetActiveScene() const { return m_Scenes[m_ActiveSceneId]; }
 		int GetActiveSceneId()const { return m_ActiveSceneId; }
 
+		void AddGameObjectToAllScenes(const std::shared_ptr<GameObject>& gameObject);
+
 		EntityCounter* GetEntityCounter() { return &m_EntityCounter; }
 	private:
 		friend class Singleton<SceneManager>;

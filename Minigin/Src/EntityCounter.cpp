@@ -44,7 +44,7 @@ void dae::EntityCounter::NotifyObserver()
 
 void dae::EntityCounter::EnemyKilled()
 {
-	m_EnemiesAlive--;
+	--m_EnemiesAlive;
 	NotifyObserver();
 }
 

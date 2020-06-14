@@ -49,26 +49,13 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() 
 {
-	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	std::cout << "First player uses the arrow keys + space to move / jump / shoot" << std::endl;
+	std::cout << "press enter to spawn the second player " << std::endl;
+	std::cout << "second player uses WASD to move / jump / shoot" << std::endl;
 
-	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
-	////gameObject->AddRenderComponent(std::make_shared<RenderComponent>());
-	////gameObject->GetRenderComponent()->AddTexture("background.jpg");
-	////int idLogo = gameObject->GetRenderComponent()->AddTexture("logo.png");
-	////gameObject->GetRenderComponent()->SetPositionTexture(idLogo, 216, 180, 0);
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	////gameObject->AddTextComponent("Programming 4 Assignment", font);
-	////gameObject->GetTextComponent()->SetPosition(80, 20);
-	////scene.Add(gameObject);
-
-	////change the content of gameObject to a new pointer that points to a different gameobject with no components yet
-	//gameObject = std::make_shared<GameObject>();
-	//gameObject->AddTextComponent("0",font);
-	//pFrameCounter = gameObject->GetTextComponent();
-	//scene.Add(gameObject);
-
+	std::cout << std::endl << std::endl << "last level is the versus mode between player(s) and the maita" << std::endl;
+	std::cout << "the maita is controlled by the T / F / H / G keys " << std::endl;
 	Game game{};
-
 }
 
 void dae::Minigin::Cleanup()
@@ -87,11 +74,6 @@ void dae::Minigin::Run()
 	ResourceManager::GetInstance().Init("./Data/");
 
 	LoadGame();
-
-	//dont constantly update the framecounter
-	//const float cooldownTime{ 0.25f };
-	//float accumulatedTime{};
-	//Uint32 fps{};
 	{
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
@@ -109,31 +91,15 @@ void dae::Minigin::Run()
 			m_DeltaTime = (SDL_GetTicks() - m_TicksPrevFrame) / 1000.f;
 			m_TicksPrevFrame = SDL_GetTicks();
 
-			//clamp -> slow computers -> minimum 20 fps -> no idea why i do this
 			m_DeltaTime = (m_DeltaTime > 0.05f) ? 0.05f : m_DeltaTime;
 			//FPS COUNTER
 			//std::cout << 1/m_DeltaTime << std::endl;
-
-			//if (accumulatedTime > cooldownTime)
-			//{
-			//	if (m_DeltaTime != 0)
-			//		fps = Uint32(1 / m_DeltaTime);
-			//	pFrameCounter->SetText(std::to_string(fps));
-			//	accumulatedTime = 0;
-			//}
 
 			doContinue = input.ProcessInput();
 
 			sceneManager.Update(m_DeltaTime);
 
 			renderer.Render();
-			
-			//accumulatedTime += m_DeltaTime;
-
-
-			//using int here so it doesn't implicitly convert it to an unsigned int / this value can be negative if your computer runs slow
-
-
 		}
 	}
 

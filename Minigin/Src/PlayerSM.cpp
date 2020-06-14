@@ -38,7 +38,7 @@ void dae::PlayerSM::Update(float deltaTime)
 	
 	if(!m_CanShoot && m_CurrentShotCooldown < m_ShootCooldown)
 		m_CurrentShotCooldown += deltaTime;
-	else if (m_CurrentShotCooldown > m_ShootCooldown && !m_CanShoot)
+	else if (m_CurrentShotCooldown >= m_ShootCooldown && !m_CanShoot)
 	{
 		m_CanShoot = true;
 		m_CurrentShotCooldown = 0.0f;
@@ -48,7 +48,7 @@ void dae::PlayerSM::Update(float deltaTime)
 	{
 		m_CurrentImmuneCooldown += deltaTime;
 	}
-	else if(m_CurrentImmuneCooldown > m_ImmuneCooldown && m_IsImmune)
+	else if(m_CurrentImmuneCooldown >= m_ImmuneCooldown && m_IsImmune)
 	{
 		m_IsImmune = false;
 		m_CurrentImmuneCooldown = 0.0f;

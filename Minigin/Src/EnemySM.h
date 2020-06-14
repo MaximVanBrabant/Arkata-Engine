@@ -33,6 +33,8 @@ namespace dae
 		const std::shared_ptr<EnemyState>& GetBubbleState() const { return m_Bubble; }
 
 		const std::weak_ptr<GameObject>& GetTarget() const { return m_pTarget; }
+		void SetTarget(const std::shared_ptr<GameObject> target) { m_pTarget = target; }
+
 		float GetToCloseMeleeDistance () const { return m_ToCloseMeleeDistance; }
 		float GetToCloseRangedDistance() const { return m_ToCloseRangedDistance; }
 

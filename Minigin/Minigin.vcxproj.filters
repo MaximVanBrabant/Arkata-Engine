@@ -58,9 +58,6 @@
     <Filter Include="Source Files\StateMachines\EnemyStateMachine">
       <UniqueIdentifier>{af27ebe7-3703-41e5-8380-68c4694e5b02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates">
-      <UniqueIdentifier>{8c73c4f0-21cb-477c-b9ad-6e30b195c4bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\StateMachines\EnemyStateMachine\EnemyPlayerStates">
       <UniqueIdentifier>{ffc0a790-128f-4725-ba3e-1d5048b55d55}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,21 @@
     </Filter>
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{6c23386b-48a0-409f-a31b-fad25dd363b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines\VersusEnemyStateMachine">
+      <UniqueIdentifier>{644f8113-ded6-4dfb-bc46-5f6173c6c86a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateMachines\VersusEnemyStateMachine">
+      <UniqueIdentifier>{00c0bf07-b094-4f83-9981-91357624a68f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates">
+      <UniqueIdentifier>{0353479e-9087-4cbe-8583-1dafa8bc22b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateMachines\EnemyStateMachine\EnemyStates">
+      <UniqueIdentifier>{8c73c4f0-21cb-477c-b9ad-6e30b195c4bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates">
+      <UniqueIdentifier>{b0bfc34a-c513-4551-b08a-85352ace9fa8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,19 +178,19 @@
       <Filter>Header Files\StateMachines\EnemyStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Src\EnemyState.h">
-      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\SeekEnemyState.h">
-      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\JumpEnemyState.h">
-      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\AttackEnemyState.h">
-      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\BubbleEnemyState.h">
-      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyPlayerStates</Filter>
+      <Filter>Header Files\StateMachines\EnemyStateMachine\EnemyStates</Filter>
     </ClInclude>
     <ClInclude Include="Src\Subject.h">
       <Filter>Header Files\Observer</Filter>
@@ -194,6 +206,21 @@
     </ClInclude>
     <ClInclude Include="Src\ScoreObserver.h">
       <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\VersusEnemySM.h">
+      <Filter>Header Files\StateMachines\VersusEnemyStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\VersusEnemyIdleState.h">
+      <Filter>Header Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\VersusEnemyState.h">
+      <Filter>Header Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\VersusEnemyMoveState.h">
+      <Filter>Header Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\VersusEnemyJumpState.h">
+      <Filter>Header Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +325,18 @@
     </ClCompile>
     <ClCompile Include="Src\ScoreObserver.cpp">
       <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VersusEnemy.cpp">
+      <Filter>Source Files\StateMachines\VersusEnemyStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VersusEnemyIdleState.cpp">
+      <Filter>Source Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VersusEnemyJumpState.cpp">
+      <Filter>Source Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VersusEnemyMoveState.cpp">
+      <Filter>Source Files\StateMachines\VersusEnemyStateMachine\VersusEnemyStates</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

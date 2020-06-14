@@ -12,8 +12,6 @@ namespace dae
 		void Register(Observer* o) override;
 		void Unregister(Observer* o) override;
 		void NotifyObserver() override;
-
-
 		
 		void EnemyKilled();
 		void ScoreIncrementation(int score, int playerIndex);
@@ -32,7 +30,7 @@ namespace dae
 
 		int m_HealthPlayer1 = 4;
 		int m_HealthPlayer2 = 4;
-
+		
 	};
 
 

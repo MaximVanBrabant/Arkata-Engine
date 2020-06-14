@@ -246,6 +246,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Src\Texture2D.h" />
     <ClInclude Include="Src\Transform.h" />
     <ClInclude Include="Src\TileComponent.h" />
+    <ClInclude Include="Src\VersusEnemyIdleState.h" />
+    <ClInclude Include="Src\VersusEnemyJumpState.h" />
+    <ClInclude Include="Src\VersusEnemyMoveState.h" />
+    <ClInclude Include="Src\VersusEnemySM.h" />
+    <ClInclude Include="Src\VersusEnemyState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AttackEnemyState.cpp" />
@@ -288,6 +293,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Src\Texture2D.cpp" />
     <ClCompile Include="Src\Transform.cpp" />
     <ClCompile Include="Src\TileComponent.cpp" />
+    <ClCompile Include="Src\VersusEnemy.cpp" />
+    <ClCompile Include="Src\VersusEnemyIdleState.cpp" />
+    <ClCompile Include="Src\VersusEnemyJumpState.cpp" />
+    <ClCompile Include="Src\VersusEnemyMoveState.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
