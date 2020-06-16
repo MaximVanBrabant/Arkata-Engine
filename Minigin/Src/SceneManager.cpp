@@ -29,6 +29,10 @@ void dae::SceneManager::SetActiveScene(int id)
 	{
 		SceneManager::GetInstance().GetEntityCounter()->SetEnemiesAlive(4);
 	}
+	else if (id == 3)
+	{
+		SceneManager::GetInstance().GetEntityCounter()->SetEnemiesAlive(2);
+	}
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)

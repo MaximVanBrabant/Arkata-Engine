@@ -50,14 +50,20 @@ namespace dae
 		template<typename T>
 		bool HasComponent() const
 		{
-			for (auto& pair : m_ComponentTypeMap)
+			//this is needed because of threading
+			if (this != nullptr)
 			{
-				if (typeid(T).name() == pair.first->name())
+				for (auto& pair : m_ComponentTypeMap)
 				{
-					return true;
+					if (typeid(T).name() == pair.first->name())
+					{
+						return true;
+					}
 				}
+				return false;
 			}
 			return false;
+			//throw exeption
 		}
 
 

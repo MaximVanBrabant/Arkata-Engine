@@ -430,8 +430,6 @@ void dae::CollisionManager::CheckGameObjectCollisions()
 	//HERE YOU CAN USE THREAD
 	std::thread thread{ &CollisionManager::CheckCollisionOnAIColliders,this, std::ref(vEnemyIndices)};
 
-//	CheckCollisionOnAIColliders(vEnemyIndices);
-
 	for (int i{ 0 }; i < static_cast<int>(gameObjects.size()); ++i)
 	{
 		auto& firstGameObject = gameObjects[i];
