@@ -3,10 +3,12 @@ Design Patterns:
 	- Component system - > adding components to a gameObject 
 		different kinds of components:
 						transform, collider, keyboardInput, sprite, 
-						every component inherits from the base component that has a Update / Render / Initialize function
+						every component inherits from the base component that 
+						has a Update / Render / Initialize function
 						
 	- Collision system -> collisionManager = handles all of the collision between all the objects with colliders + the enemyAI colliders
-	I use tags for the colliders so then I know which kind of types of gameobject have collided with eachother and then through an enum i give that a specific kind of collisionType depending on the tags
+	I use tags for the colliders so then I know which kind of types of gameobject have collided with eachother and then through an enum i give that a specific kind of 
+	collisionType depending on the tags
 	then depending on the collisionType, specific code will be executed.
 
 	- AI system -> every enemy has collisionboxes that define the environment they can see. using this i can manipulate their behavior dependant on what they can see in the collision boxes
